@@ -1,56 +1,79 @@
-import Joi from "joi";
-import { useState } from "react";
+import { Component } from "react";
 
-function TextBox({ name, text, icon, type = "text" }) {
-  const [isFocus, setIsFocus] = useState(false);
-  const [value, setValue] = useState("");
+class TextBox extends Component {
+  state = {
+    isFocus: false,
+    value: "",
+    error: "",
+  };
 
-  let box = `bg-gray-100 rounded-md p-2 relative border-2 border-transparent outline outline-transparent`;
-  let input = "text-xl p-2 outline-none bg-gray-100 w-full";
-  let placeholder =
-    "text-xl absolute top-50 translate-y-2 left-0 translate-x-6 pointer-events-none transition-all duration-250";
+  getBoxStyle = () => {
+    if (this.state.isFocus && this.state.error)
+      return `bg-gray-100 rounded-md p-2 relative border-2 border-red-600 bg-white outline outline-gray-200 animation-shake`;
+    if (this.state.isFocus)
+      return `bg-gray-100 rounded-md p-2 relative border-2 border-second bg-white outline outline-gray-200`;
+    return `bg-gray-100 rounded-md p-2 relative border-2 border-transparent outline outline-transparent`;
+  };
 
-  if (isFocus) {
-    box = `bg-gray-100 rounded-md p-2 relative border-2 border-second bg-white outline outline-gray-200`;
-    input = "text-xl p-2 outline-none bg-white w-full";
-    placeholder =
-      "text-md text-second font-semibold bg-white p-1 absolute top-50 -translate-y-7 left-0 translate-x-2 pointer-events-none transition-all duration-250";
+  getInputStyle = () => {
+    if (this.state.isFocus) return "text-xl p-2 outline-none bg-white w-full";
+    return "text-xl p-2 outline-none bg-gray-100 w-full";
+  };
+
+  getPlaceHolderStyle = () => {
+    if (this.state.isFocus && this.state.error)
+      return "text-md text-red-600 font-semibold bg-white  p-1 absolute top-50 -translate-y-7 left-0 translate-x-2 pointer-events-none transition-all duration-250";
+    if (this.state.isFocus)
+      return "text-md text-second font-semibold bg-white p-1 absolute top-50 -translate-y-7 left-0 translate-x-2 pointer-events-none transition-all duration-250";
+    return "text-xl absolute top-50 translate-y-2 left-0 translate-x-6 pointer-events-none transition-all duration-250";
+  };
+
+  handleOnFocus = () => {
+    const state = { ...this.state };
+    state.isFocus = true;
+
+    this.setState(state);
+  };
+
+  handleOnBlur = () => {
+    if (this.state.value) return;
+
+    const state = { ...this.state };
+    state.isFocus = false;
+    state.error = "";
+
+    this.setState(state);
+  };
+
+  handleOnChange = (e) => {
+    const state = { ...this.state };
+    state.value = e.target.value;
+    this.setState(state);
+  };
+
+  render() {
+    return (
+      <div className={this.getBoxStyle()}>
+        <input
+          id={this.props.name}
+          type={this.props.type}
+          className={this.getInputStyle()}
+          value={this.state.value}
+          autoComplete="off"
+          onChange={this.handleOnChange}
+          onFocus={this.handleOnFocus}
+          onBlur={this.handleOnBlur}
+        />
+        <span className={this.getPlaceHolderStyle()}>{this.props.text}</span>
+        <label
+          htmlFor={this.props.name}
+          className="absolute top-50 left-100 translate-y-3 -translate-x-7"
+        >
+          {this.props.icon}
+        </label>
+      </div>
+    );
   }
-
-  function handleOnChange(e) {
-    setValue(e.target.value);
-  }
-
-  function handleOnFocus(e) {
-    setIsFocus(true);
-  }
-
-  function handleOnBlur(e) {
-    if (value) return;
-
-    setIsFocus(false);
-  }
-
-  return (
-    <div className={box}>
-      <input
-        id={name}
-        type={type}
-        className={input}
-        value={value}
-        onChange={handleOnChange}
-        onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
-      />
-      <span className={placeholder}>{text}</span>
-      <label
-        htmlFor={name}
-        className="absolute top-50 left-100 translate-y-3 -translate-x-7"
-      >
-        {icon}
-      </label>
-    </div>
-  );
 }
 
 export default TextBox;

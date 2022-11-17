@@ -2,7 +2,8 @@ import { Routes, Route, Link, useLocation } from "react-router-dom";
 import NotFound from "../../playground/src/pages/NotFound";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Register from "./pages/SignUp";
+import Register from "./pages/Register";
+import "./App.css";
 
 function App() {
   const { pathname } = useLocation();
@@ -17,9 +18,9 @@ function App() {
           <ul className="flex gap-8 items-center">
             <li>
               <Link
-                to="/signup"
+                to="/register"
                 className={`flex items-center gap-2 py-2 px-6 ${
-                  pathname === "/signup"
+                  pathname === "/register"
                     ? "bg-first border-first"
                     : "bg-third border-third"
                 } rounded-md hover:bg-first hover:border-first`}
@@ -74,7 +75,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

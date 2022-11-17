@@ -1,27 +1,44 @@
 import Joi from "joi";
-import Parent from "./Parent";
+import React, { createRef } from "react";
+import TextBox from "./TextBox";
 
-class Child extends Parent {
+class Password extends TextBox {
+  debounceID = createRef();
+
   handleOnChange = (e) => {
     const state = { ...this.state };
-    const { error } = this.validate(e.target.value);
-
-    if (!e.target.value) state.error = "";
-    else
-      state.error = error
-        ? error.details[0].message.replace(`"firstName" length m`, "M")
-        : "";
-
     state.value = e.target.value;
+    this.debounce(e.target.value);
     this.setState(state);
+  };
+
+  debounce = (value) => {
+    clearTimeout(this.debounceID.current);
+    this.debounceID.current = setTimeout(() => {
+      const state = { ...this.state };
+      const { error } = this.validate(value);
+      state.error = value && error ? error.message : "";
+      this.setState(state);
+    }, 600);
   };
 
   validate = (value) => {
     const schema = Joi.object({
-      firstName: Joi.string().min(2).max(55).required(),
+      password: Joi.string()
+        .pattern(
+          new RegExp(
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{4,}$/
+          )
+        )
+        .error(
+          new Error(
+            "Password should contain lowercase, uppercase, number, and a symbol"
+          )
+        )
+        .required(),
     });
 
-    return schema.validate({ firstName: value });
+    return schema.validate({ password: value });
   };
 
   render() {
@@ -32,6 +49,7 @@ class Child extends Parent {
           type={this.props.type}
           className={this.getInputStyle()}
           value={this.state.value}
+          autoComplete="off"
           onChange={this.handleOnChange}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
@@ -50,4 +68,4 @@ class Child extends Parent {
   }
 }
 
-export default Child;
+export default Password;
