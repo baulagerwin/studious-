@@ -6,57 +6,63 @@ class Email extends TextBox {
   debounceID = createRef();
 
   handleOnChange = (e) => {
-    const state = { ...this.state };
-    state.value = e.target.value;
-    this.debounce("Email", e.target.value);
-    this.setState(state);
+    this.debounce(e);
+    this.props.onChange(e);
   };
 
-  debounce = (name, value) => {
+  debounce = (e) => {
     clearTimeout(this.debounceID.current);
     this.debounceID.current = setTimeout(() => {
-      const state = { ...this.state };
-      const { error } = this.validate(value);
-      state.error =
-        value && error
-          ? (state.error = error.details[0].message.replace(
-              `"${name.toLowerCase()}"`,
-              name
-            ))
-          : "";
-      this.setState(state);
+      const { error } = this.validate(e.target.value);
+      let errorMessage = this.getErrorMessage("Email", e.target.value, error);
+      this.props.onChange(e, errorMessage);
     }, 600);
+  };
+
+  getErrorMessage = (name, value, error) => {
+    let nameInLowerCase = name.toLowerCase();
+
+    return value && error
+      ? error.details[0].message.replace(`"${nameInLowerCase}"`, name)
+      : "";
   };
 
   validate = (value) => {
     const schema = Joi.object({
-      email: Joi.string().min(2).max(55).email({ tlds: { allow: false } }).required(),
+      email: Joi.string()
+        .min(2)
+        .max(55)
+        .email({ tlds: { allow: false } })
+        .required(),
     });
 
     return schema.validate({ email: value });
   };
 
   render() {
+    const { name, text, type, value, error, icon } = this.props;
+
     return (
       <div className={this.getBoxStyle()}>
         <input
-          id={this.props.name}
-          type={this.props.type}
+          id={name}
+          name={name}
+          type={type}
           className={this.getInputStyle()}
-          value={this.state.value}
+          value={value}
           autoComplete="off"
           onChange={this.handleOnChange}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
         />
         <span className={this.getPlaceHolderStyle()}>
-          {this.state.error ? this.state.error : this.props.text}
+          {error ? error : text}
         </span>
         <label
-          htmlFor={this.props.name}
+          htmlFor={name}
           className="absolute top-50 left-100 translate-y-3 -translate-x-7"
         >
-          {this.props.icon}
+          {icon}
         </label>
       </div>
     );
