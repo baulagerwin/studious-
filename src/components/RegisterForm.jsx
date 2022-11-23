@@ -105,7 +105,7 @@ function RegisterForm() {
     }
 
     // Submit logic here
-    if (!isValidating) {
+    if (!isValidating && !isNotValid()) {
       console.log({
         firstName: fields.firstName.value,
         lastName: fields.lastName.value,

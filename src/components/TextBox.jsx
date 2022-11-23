@@ -2,7 +2,7 @@ import { Component } from "react";
 
 class TextBox extends Component {
   state = {
-    isFocus: false,
+    isFocus: this.props.value ? true : false,
   };
 
   getBoxStyle = () => {

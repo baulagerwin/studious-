@@ -14,21 +14,13 @@ class Password extends TextBox {
     clearTimeout(this.debounceID.current);
     this.debounceID.current = setTimeout(() => {
       const { error } = this.validate(e.target.value);
-      let errorMessage = this.getErrorMessage(
-        "Password",
-        e.target.value,
-        error
-      );
+      let errorMessage = this.getErrorMessage(e.target.value, error);
       this.props.onChange(e, errorMessage);
     }, 600);
   };
 
-  getErrorMessage = (name, value, error) => {
-    let nameInLowerCase = name.toLowerCase();
-
-    return value && error
-      ? error.details[0].message.replace(`"${nameInLowerCase}"`, name)
-      : "";
+  getErrorMessage = (value, error) => {
+    return value && error ? error.details[0].message : "";
   };
 
   validate = (value) => {

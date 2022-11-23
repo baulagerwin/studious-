@@ -14,26 +14,22 @@ class Email extends TextBox {
     clearTimeout(this.debounceID.current);
     this.debounceID.current = setTimeout(() => {
       const { error } = this.validate(e.target.value);
-      let errorMessage = this.getErrorMessage("Email", e.target.value, error);
+      let errorMessage = this.getErrorMessage(e.target.value, error);
       this.props.onChange(e, errorMessage);
     }, 600);
   };
 
-  getErrorMessage = (name, value, error) => {
-    let nameInLowerCase = name.toLowerCase();
-
-    return value && error
-      ? error.details[0].message.replace(`"${nameInLowerCase}"`, name)
-      : "";
+  getErrorMessage = (value, error) => {
+    return value && error ? error.details[0].message.replace(/["]/gi, "") : "";
   };
-
   validate = (value) => {
     const schema = Joi.object({
       email: Joi.string()
         .min(2)
         .max(55)
         .email({ tlds: { allow: false } })
-        .required(),
+        .required()
+        .label("Email"),
     });
 
     return schema.validate({ email: value });
