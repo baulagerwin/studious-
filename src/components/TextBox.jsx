@@ -53,12 +53,12 @@ class TextBox extends Component {
   };
 
   render() {
-    const { name, text, type, value, onChange, icon } = this.props;
+    const { id, name, text, type, value, onChange, icon } = this.props;
 
     return (
       <div className={this.getBoxStyle()}>
         <input
-          id={name}
+          id={id}
           name={name}
           type={type}
           className={this.getInputStyle()}
@@ -70,7 +70,7 @@ class TextBox extends Component {
         />
         <span className={this.getPlaceHolderStyle()}>{text}</span>
         <label
-          htmlFor={name}
+          htmlFor={id}
           className="absolute top-50 left-100 translate-y-3 -translate-x-7"
         >
           {icon}

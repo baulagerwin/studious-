@@ -2,51 +2,61 @@ import Center from "../containers/Center";
 import ColumnSpanFull from "../containers/ColumnSpanFull";
 import SubmitButton from "../elements/SubmitButton";
 import TwoGrids from "../layouts/TwoGrids";
-import AuthUsername from "../components/AuthUsername";
-import AuthPassword from "../components/AuthPassword";
 import { useState } from "react";
+import authService from "../services/authService";
+import TextBox from "./TextBox";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
+  const navigator = useNavigate();
   const [fields, setFields] = useState({
-    userName: {
+    username: {
       value: "",
-      error: "",
     },
     password: {
       value: "",
-      error: "",
     },
   });
 
-  function handleOnChange(e, errorMessage = "") {
+  function handleOnChange(e) {
     setFields({
       ...fields,
       [e.target.name]: {
         value: e.target.value,
-        error: errorMessage,
       },
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    // Submit logic here
-    console.log({
-      userName: fields.userName.value,
-      password: fields.password.value,
-    });
+    if (!Boolean(fields.username.value) || !Boolean(fields.password.value))
+      return;
+
+    try {
+      const { data } = await authService.login({
+        username: fields.username.value,
+        password: fields.password.value,
+      });
+
+      localStorage.setItem("token", data);
+      navigator("/main");
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400)
+        toast.error(ex.response.data);
+    }
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <TwoGrids>
         <ColumnSpanFull>
-          <AuthUsername
-            name="userName"
+          <TextBox
+            id="usernameLogin"
+            name="username"
             text="Username"
-            value={fields.userName.value}
-            error={fields.userName.error}
+            value={fields.username.value}
             onChange={handleOnChange}
             icon={
               <svg
@@ -67,12 +77,12 @@ function LoginForm() {
           />
         </ColumnSpanFull>
         <ColumnSpanFull>
-          <AuthPassword
+          <TextBox
+            id="password"
             name="password"
             type="password"
             text="Password"
             value={fields.password.value}
-            error={fields.password.error}
             onChange={handleOnChange}
             icon={
               <svg

@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import Container from "../containers/Container";
-
 import RegisterForm from "../components/RegisterForm";
 
 function Register() {
   return (
     <Container>
-      <div className="w-1/2 mx-auto mt-24">
+      <div className="w-1/2 mx-auto mt-20">
         <p className="text-xl font-semibold uppercase text-gray-400 mb-2">
           Start for{" "}
           <span className="text-third border-b-2 border-third">free</span>

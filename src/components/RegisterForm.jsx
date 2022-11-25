@@ -9,10 +9,11 @@ import Email from "../components/Email";
 import Password from "../components/Password";
 import TextBox from "../components/TextBox";
 import { useRef, useState } from "react";
+import userService from "../services/userService";
 
 function RegisterForm() {
   const debounceID = useRef(null);
-  const [isValidating, setIsValidating] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [fields, setFields] = useState({
     firstName: {
       value: "",
@@ -22,7 +23,7 @@ function RegisterForm() {
       value: "",
       error: "",
     },
-    userName: {
+    username: {
       value: "",
       error: "",
     },
@@ -37,17 +38,17 @@ function RegisterForm() {
   });
 
   function isNotValid() {
-    const { firstName, lastName, userName, email, password } = fields;
+    const { firstName, lastName, username, email, password } = fields;
 
     const isThereEmptyField =
       !Boolean(firstName.value) ||
       !Boolean(lastName.value) ||
-      !Boolean(userName.value) ||
+      !Boolean(username.value) ||
       !Boolean(email.value) ||
       !Boolean(password.value);
 
     const isThereAnErrorField =
-      Boolean(userName.error) ||
+      Boolean(username.error) ||
       Boolean(email.error) ||
       Boolean(password.error);
 
@@ -64,7 +65,7 @@ function RegisterForm() {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const currentFields = { ...fields };
@@ -77,8 +78,8 @@ function RegisterForm() {
         value: currentFields.lastName.value,
         error: "",
       },
-      userName: {
-        value: currentFields.userName.value,
+      username: {
+        value: currentFields.username.value,
         error: "",
       },
       email: {
@@ -92,27 +93,39 @@ function RegisterForm() {
     };
 
     if (isNotValid() && !_.isEqual(preSubmitFields, currentFields)) {
-      setIsValidating(true);
+      setIsAnimating(true);
       setFields(preSubmitFields);
 
       clearTimeout(debounceID.current);
       debounceID.current = setTimeout(() => {
-        setIsValidating(false);
+        setIsAnimating(false);
         setFields(currentFields);
       }, 600);
 
       return;
     }
 
-    // Submit logic here
-    if (!isValidating && !isNotValid()) {
-      console.log({
-        firstName: fields.firstName.value,
-        lastName: fields.lastName.value,
-        userName: fields.userName.value,
-        email: fields.email.value,
-        password: fields.password.value,
-      });
+    if (!isAnimating && !isNotValid()) {
+      try {
+        const result = await userService.register({
+          firstName: fields.firstName.value,
+          lastName: fields.lastName.value,
+          username: fields.username.value,
+          email: fields.email.value,
+          password: fields.password.value,
+        });
+        console.log(result);
+      } catch (ex) {
+        if (ex.response && ex.response.status === 400) {
+          setFields({
+            ...fields,
+            username: {
+              ...fields.username,
+              error: ex.response.data,
+            },
+          });
+        }
+      }
     }
   }
 
@@ -121,6 +134,7 @@ function RegisterForm() {
       <TwoGrids>
         <Column>
           <TextBox
+            id="firstName"
             name="firstName"
             text="First name"
             value={fields.firstName.value}
@@ -145,6 +159,7 @@ function RegisterForm() {
         </Column>
         <Column>
           <TextBox
+            id="lastName"
             name="lastName"
             text="Last name"
             value={fields.lastName.value}
@@ -169,10 +184,11 @@ function RegisterForm() {
         </Column>
         <ColumnSpanFull>
           <UserName
-            name="userName"
+            id="usernameRegister"
+            name="username"
             text="Username"
-            value={fields.userName.value}
-            error={fields.userName.error}
+            value={fields.username.value}
+            error={fields.username.error}
             onChange={handleOnChange}
             icon={
               <svg
@@ -194,6 +210,7 @@ function RegisterForm() {
         </ColumnSpanFull>
         <ColumnSpanFull>
           <Email
+            id="email"
             name="email"
             text="Email"
             value={fields.email.value}
@@ -219,6 +236,7 @@ function RegisterForm() {
         </ColumnSpanFull>
         <ColumnSpanFull>
           <Password
+            id="password"
             type="password"
             name="password"
             text="Password"
