@@ -4,20 +4,28 @@ import SubmitButton from "../elements/SubmitButton";
 import TwoGrids from "../layouts/TwoGrids";
 import { useState } from "react";
 import authService from "../services/authService";
-import TextBox from "./TextBox";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import AuthUsername from "./AuthUsername";
+import AuthPassword from "./AuthPassword";
+import config from "../../config.json";
 
 function LoginForm() {
   const navigator = useNavigate();
+  const [isAnimating, setIsAnimating] = useState(false);
   const [fields, setFields] = useState({
     username: {
       value: "",
+      error: "",
     },
     password: {
       value: "",
+      error: "",
     },
   });
+
+  function isNotValid() {
+    return !Boolean(fields.username.value) || !Boolean(fields.password.value);
+  }
 
   function handleOnChange(e) {
     setFields({
@@ -31,20 +39,41 @@ function LoginForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!Boolean(fields.username.value) || !Boolean(fields.password.value))
-      return;
+    if (isNotValid()) return;
 
     try {
+      setIsAnimating(true);
       const { data } = await authService.login({
         username: fields.username.value,
         password: fields.password.value,
       });
 
-      localStorage.setItem("token", data);
-      navigator("/main");
+      setTimeout(() => {
+        setIsAnimating(false);
+        localStorage.setItem("studious_token", data);
+        navigator("/main");
+      }, config.validationTimeInMS);
     } catch (ex) {
-      if (ex.response && ex.response.status === 400)
-        toast.error(ex.response.data);
+      setFields({
+        username: {
+          value: fields.username.value,
+          error: "",
+        },
+        password: {
+          value: fields.password.value,
+          error: "",
+        },
+      });
+      setTimeout(() => {
+        setIsAnimating(false);
+        const copy = { ...fields };
+
+        ex.response.data.indexOf("username") > 0
+          ? (copy.username.error = ex.response.data)
+          : (copy.password.error = ex.response.data);
+
+        setFields(copy);
+      }, config.validationTimeInMS);
     }
   }
 
@@ -52,11 +81,12 @@ function LoginForm() {
     <form onSubmit={handleSubmit}>
       <TwoGrids>
         <ColumnSpanFull>
-          <TextBox
+          <AuthUsername
             id="usernameLogin"
             name="username"
             text="Username"
             value={fields.username.value}
+            error={fields.username.error}
             onChange={handleOnChange}
             icon={
               <svg
@@ -77,12 +107,13 @@ function LoginForm() {
           />
         </ColumnSpanFull>
         <ColumnSpanFull>
-          <TextBox
+          <AuthPassword
             id="password"
             name="password"
             type="password"
             text="Password"
             value={fields.password.value}
+            error={fields.password.error}
             onChange={handleOnChange}
             icon={
               <svg
@@ -104,7 +135,7 @@ function LoginForm() {
         </ColumnSpanFull>
         <ColumnSpanFull>
           <Center>
-            <SubmitButton>Log In</SubmitButton>
+            <SubmitButton isAnimating={isAnimating}>Log In</SubmitButton>
           </Center>
         </ColumnSpanFull>
       </TwoGrids>

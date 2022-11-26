@@ -1,4 +1,3 @@
-import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
 import Container from "../containers/Container";
 import LoginForm from "../components/LoginForm";
@@ -6,14 +5,6 @@ import LoginForm from "../components/LoginForm";
 function Login() {
   return (
     <Container>
-      <ToastContainer
-        className="w-1/4"
-        toastClassName="bg-red-100 text-xl text-red-400 p-4"
-        position="top-center"
-        hideProgressBar="true"
-        pauseOnHover="false"
-        autoClose="1000"
-      />
       <div className="w-1/2 mx-auto mt-20">
         <p className="text-xl font-semibold uppercase text-gray-400 mb-2">
           Skyrocket your{" "}

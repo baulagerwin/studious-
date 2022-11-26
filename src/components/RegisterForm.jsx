@@ -10,8 +10,11 @@ import Password from "../components/Password";
 import TextBox from "../components/TextBox";
 import { useRef, useState } from "react";
 import userService from "../services/userService";
+import { useNavigate } from "react-router-dom";
+import config from "../../config.json";
 
 function RegisterForm() {
+  const navigator = useNavigate();
   const debounceID = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [fields, setFields] = useState({
@@ -100,31 +103,35 @@ function RegisterForm() {
       debounceID.current = setTimeout(() => {
         setIsAnimating(false);
         setFields(currentFields);
-      }, 600);
+      }, config.validationTimeInMS);
 
       return;
     }
 
     if (!isAnimating && !isNotValid()) {
       try {
-        const result = await userService.register({
+        setIsAnimating(true);
+        const response = await userService.register({
           firstName: fields.firstName.value,
           lastName: fields.lastName.value,
           username: fields.username.value,
           email: fields.email.value,
           password: fields.password.value,
         });
-        console.log(result);
+
+        setTimeout(() => {
+          setIsAnimating(true);
+          localStorage.setItem(
+            "studious_token",
+            response.headers["x-auth-token"]
+          );
+          navigator("/main");
+        }, config.validationTimeInMS);
       } catch (ex) {
-        if (ex.response && ex.response.status === 400) {
-          setFields({
-            ...fields,
-            username: {
-              ...fields.username,
-              error: ex.response.data,
-            },
-          });
-        }
+        setIsAnimating(false);
+        const copy = { ...fields };
+        copy.username.error = ex.response.data;
+        setFields(copy);
       }
     }
   }
@@ -263,7 +270,9 @@ function RegisterForm() {
         </ColumnSpanFull>
         <ColumnSpanFull>
           <Center>
-            <SubmitButton>Create Account</SubmitButton>
+            <SubmitButton isAnimating={isAnimating}>
+              Create Account
+            </SubmitButton>
           </Center>
         </ColumnSpanFull>
       </TwoGrids>

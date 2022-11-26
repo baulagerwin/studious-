@@ -3,12 +3,12 @@ import TextBox from "./TextBox";
 
 class AuthPassword extends TextBox {
   render() {
-    const { name, text, type, value, error, icon, onChange } = this.props;
+    const { id, name, text, type, value, error, icon, onChange } = this.props;
 
     return (
       <div className={this.getBoxStyle()}>
         <input
-          id={name}
+          id={id}
           name={name}
           type={type}
           className={this.getInputStyle()}
@@ -22,7 +22,7 @@ class AuthPassword extends TextBox {
           {error ? error : text}
         </span>
         <label
-          htmlFor={name}
+          htmlFor={id}
           className="absolute top-50 left-100 translate-y-3 -translate-x-7"
         >
           {icon}

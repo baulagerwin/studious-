@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 axios.interceptors.response.use(null, (error) => {
   const expectedErrors =
@@ -7,8 +8,9 @@ axios.interceptors.response.use(null, (error) => {
     error.response.status < 500;
 
   if (!expectedErrors) {
+    // Log this error in sentry.io if u have a subscription
     console.log("Logging the error", error);
-    alert("An unexpected error occured.");
+    toast.error("An unexpected error occured. Try again later.");
   }
 
   return Promise.reject(error);

@@ -6,12 +6,14 @@ import Register from "./pages/Register";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Main from "./pages/Main";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { pathname } = useLocation();
 
   return (
     <>
+      <ToastContainer />
       <nav className="border-b shadow-lg shadow-slate-100">
         <div className="container mx-auto py-2 px-8 flex justify-between items-center">
           <Link to="/" className="text-3xl font-bold text-third">
