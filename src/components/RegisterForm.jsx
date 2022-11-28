@@ -1,4 +1,7 @@
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import _ from "lodash";
+import userService from "../services/userService";
 import Center from "../containers/Center";
 import Column from "../containers/Column";
 import ColumnSpanFull from "../containers/ColumnSpanFull";
@@ -8,9 +11,6 @@ import UserName from "../components/UserName";
 import Email from "../components/Email";
 import Password from "../components/Password";
 import TextBox from "../components/TextBox";
-import { useRef, useState } from "react";
-import userService from "../services/userService";
-import { useNavigate } from "react-router-dom";
 import config from "../../config.json";
 
 function RegisterForm() {
@@ -122,10 +122,10 @@ function RegisterForm() {
         setTimeout(() => {
           setIsAnimating(true);
           localStorage.setItem(
-            "studious_token",
+            config.authTokenName,
             response.headers["x-auth-token"]
           );
-          navigator("/main");
+          navigator("/");
         }, config.validationTimeInMS);
       } catch (ex) {
         setIsAnimating(false);

@@ -50,8 +50,8 @@ function LoginForm() {
 
       setTimeout(() => {
         setIsAnimating(false);
-        localStorage.setItem("studious_token", data);
-        navigator("/main");
+        localStorage.setItem(config.authTokenName, data);
+        navigator("/");
       }, config.validationTimeInMS);
     } catch (ex) {
       setFields({
