@@ -1,4 +1,7 @@
 import { Component } from "react";
+import Input from "../../elements/Input";
+import Label from "../../elements/Label";
+import Placeholder from "../../elements/Placeholder";
 
 class TextBox extends Component {
   state = {
@@ -34,6 +37,15 @@ class TextBox extends Component {
     return "text-xl absolute top-50 translate-y-2 left-0 translate-x-6 pointer-events-none transition-all duration-250";
   };
 
+  getLabelStyle = () => {
+    const { error } = this.props;
+
+    if (error)
+      return "absolute top-50 left-100 translate-y-3 -translate-x-7 text-red-600";
+
+    return "absolute top-50 left-100 translate-y-3 -translate-x-7";
+  };
+
   handleOnFocus = () => {
     const state = { ...this.state };
     state.isFocus = true;
@@ -57,24 +69,18 @@ class TextBox extends Component {
 
     return (
       <div className={this.getBoxStyle()}>
-        <input
+        <Input
           id={id}
           name={name}
           type={type}
           className={this.getInputStyle()}
           value={value}
-          autoComplete="off"
           onChange={onChange}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
         />
-        <span className={this.getPlaceHolderStyle()}>{text}</span>
-        <label
-          htmlFor={id}
-          className="absolute top-50 left-100 translate-y-3 -translate-x-7"
-        >
-          {icon}
-        </label>
+        <Placeholder className={this.getPlaceHolderStyle()} text={text} />
+        <Label id={id} className={this.getLabelStyle()} icon={icon} />
       </div>
     );
   }

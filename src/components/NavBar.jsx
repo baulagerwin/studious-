@@ -24,7 +24,7 @@ function NavBar() {
               <li>
                 <Link
                   className="flex flex-row-reverse items-center gap-2 py-2 px-6 rounded-md bg-third border-third hover:bg-first hover:border-first text-white"
-                  to="/logout"
+                  to="/logging-out"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

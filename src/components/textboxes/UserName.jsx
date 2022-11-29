@@ -1,8 +1,11 @@
 import Joi from "joi";
 import React, { createRef } from "react";
+import Input from "../../elements/Input";
+import Label from "../../elements/Label";
+import Placeholder from "../../elements/Placeholder";
 import TextBox from "./TextBox";
 
-class Password extends TextBox {
+class UserName extends TextBox {
   debounceID = createRef();
 
   handleOnChange = (e) => {
@@ -20,54 +23,46 @@ class Password extends TextBox {
   };
 
   getErrorMessage = (value, error) => {
-    return value && error ? error.details[0].message : "";
+    return value && error ? error.details[0].message.replace(/["]/gi, "") : "";
   };
 
   validate = (value) => {
     const schema = Joi.object({
-      password: Joi.string()
-        .pattern(
-          new RegExp(
-            /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{4,}$/
-          )
-        )
-        .required()
-        .messages({
-          "string.pattern.base": `Password should contain lowercase, uppercase, number, and a symbol`,
-        }),
+      username: Joi.string().min(6).max(55).required().label("Username"),
     });
 
-    return schema.validate({ password: value });
+    return schema.validate({ username: value });
   };
 
   render() {
-    const { name, text, type, value, error, icon } = this.props;
+    const { id, name, text, type, value, error, icon } = this.props;
 
     return (
       <div className={this.getBoxStyle()}>
-        <input
-          id={name}
+        <Input
+          id={id}
           name={name}
           type={type}
           className={this.getInputStyle()}
           value={value}
-          autoComplete="off"
           onChange={this.handleOnChange}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
         />
-        <span className={this.getPlaceHolderStyle()}>
-          {error ? error : text}
-        </span>
-        <label
-          htmlFor={name}
-          className="absolute top-50 left-100 translate-y-3 -translate-x-7"
-        >
-          {icon}
-        </label>
+        <Placeholder
+          className={this.getPlaceHolderStyle()}
+          text={text}
+          error={error}
+        />
+        <Label
+          id={id}
+          className={this.getLabelStyle()}
+          icon={icon}
+          error={error}
+        />
       </div>
     );
   }
 }
 
-export default Password;
+export default UserName;

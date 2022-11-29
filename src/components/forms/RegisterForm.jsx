@@ -1,17 +1,17 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
-import userService from "../services/userService";
-import Center from "../containers/Center";
-import Column from "../containers/Column";
-import ColumnSpanFull from "../containers/ColumnSpanFull";
-import SubmitButton from "../elements/SubmitButton";
-import TwoGrids from "../layouts/TwoGrids";
-import UserName from "../components/UserName";
-import Email from "../components/Email";
-import Password from "../components/Password";
-import TextBox from "../components/TextBox";
-import config from "../../config.json";
+import userService from "../../services/userService";
+import Center from "../../containers/Center";
+import Column from "../../containers/Column";
+import ColumnSpanFull from "../../containers/ColumnSpanFull";
+import SubmitButton from "../../elements/SubmitButton";
+import TwoGrids from "../../layouts/TwoGrids";
+import UserName from "../textboxes/UserName";
+import Email from "../textboxes/Email";
+import Password from "../textboxes/Password";
+import TextBox from "../textboxes/TextBox";
+import config from "../../../config.json";
 
 function RegisterForm() {
   const navigator = useNavigate();
@@ -125,7 +125,7 @@ function RegisterForm() {
             config.authTokenName,
             response.headers["x-auth-token"]
           );
-          navigator("/");
+          navigator("/logging-in");
         }, config.validationTimeInMS);
       } catch (ex) {
         setIsAnimating(false);

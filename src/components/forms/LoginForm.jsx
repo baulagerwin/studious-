@@ -1,13 +1,13 @@
-import Center from "../containers/Center";
-import ColumnSpanFull from "../containers/ColumnSpanFull";
-import SubmitButton from "../elements/SubmitButton";
-import TwoGrids from "../layouts/TwoGrids";
+import Center from "../../containers/Center";
+import ColumnSpanFull from "../../containers/ColumnSpanFull";
+import SubmitButton from "../../elements/SubmitButton";
+import TwoGrids from "../../layouts/TwoGrids";
 import { useState } from "react";
-import authService from "../services/authService";
+import authService from "../../services/authService";
 import { useNavigate } from "react-router-dom";
-import AuthUsername from "./AuthUsername";
-import AuthPassword from "./AuthPassword";
-import config from "../../config.json";
+import AuthUsername from "../textboxes/AuthUsername";
+import AuthPassword from "../textboxes/AuthPassword";
+import config from "../../../config.json";
 
 function LoginForm() {
   const navigator = useNavigate();
@@ -51,7 +51,7 @@ function LoginForm() {
       setTimeout(() => {
         setIsAnimating(false);
         localStorage.setItem(config.authTokenName, data);
-        navigator("/");
+        navigator("/logging-in");
       }, config.validationTimeInMS);
     } catch (ex) {
       setFields({

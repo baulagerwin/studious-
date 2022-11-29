@@ -1,5 +1,8 @@
 import Joi from "joi";
 import React, { createRef } from "react";
+import Input from "../../elements/Input";
+import Label from "../../elements/Label";
+import Placeholder from "../../elements/Placeholder";
 import TextBox from "./TextBox";
 
 class Email extends TextBox {
@@ -36,30 +39,31 @@ class Email extends TextBox {
   };
 
   render() {
-    const { name, text, type, value, error, icon } = this.props;
+    const { id, name, text, type, value, error, icon } = this.props;
 
     return (
       <div className={this.getBoxStyle()}>
-        <input
-          id={name}
+        <Input
+          id={id}
           name={name}
           type={type}
           className={this.getInputStyle()}
           value={value}
-          autoComplete="off"
           onChange={this.handleOnChange}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
         />
-        <span className={this.getPlaceHolderStyle()}>
-          {error ? error : text}
-        </span>
-        <label
-          htmlFor={name}
-          className="absolute top-50 left-100 translate-y-3 -translate-x-7"
-        >
-          {icon}
-        </label>
+        <Placeholder
+          className={this.getPlaceHolderStyle()}
+          text={text}
+          error={error}
+        />
+        <Label
+          id={id}
+          className={this.getLabelStyle()}
+          icon={icon}
+          error={error}
+        />
       </div>
     );
   }

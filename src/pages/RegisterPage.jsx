@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import HalfContainer from "../containers/HalfContainer";
 import Container from "../containers/Container";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../components/forms/RegisterForm";
 
-function Register() {
+function RegisterPage() {
   return (
     <Container>
-      <div className="w-1/2 mx-auto mt-20">
+      <HalfContainer>
         <p className="text-xl font-semibold uppercase text-gray-400 mb-2">
           Start for{" "}
           <span className="text-third border-b-2 border-third">free</span>
@@ -21,9 +22,9 @@ function Register() {
           .
         </p>
         <RegisterForm />
-      </div>
+      </HalfContainer>
     </Container>
   );
 }
 
-export default Register;
+export default RegisterPage;
