@@ -1,6 +1,4 @@
 {
-  "authTokenName": "studious_token",
   "validationTimeInMS": 600,
-  "userEndpoint": "http://localhost:5000/api/users",
-  "authEndpoint": "http://localhost:5000/api/auth"
+  "baseURL": "http://localhost:5000/api"
 }

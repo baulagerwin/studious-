@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 import userService from "../../services/userService";
+import authService from "../../services/authService";
 import Center from "../../containers/Center";
 import Column from "../../containers/Column";
 import ColumnSpanFull from "../../containers/ColumnSpanFull";
@@ -119,19 +120,19 @@ function RegisterForm() {
           password: fields.password.value,
         });
 
+        authService.loginWithJwt(response.headers["x-auth-token"]);
+
         setTimeout(() => {
-          setIsAnimating(true);
-          localStorage.setItem(
-            config.authTokenName,
-            response.headers["x-auth-token"]
-          );
-          navigator("/logging-in");
-        }, config.validationTimeInMS);
+          setIsAnimating(false);
+          navigator("/");
+        }, Math.floor(Math.random() * config.validationTimeInMS) + 1);
       } catch (ex) {
         setIsAnimating(false);
-        const copy = { ...fields };
-        copy.username.error = ex.response.data;
-        setFields(copy);
+        if (ex.response && ex.response.status === 400) {
+          const copy = { ...fields };
+          copy.username.error = ex.response.data;
+          setFields(copy);
+        }
       }
     }
   }

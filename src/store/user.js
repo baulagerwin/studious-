@@ -7,10 +7,13 @@ const slice = createSlice({
   },
   reducers: {
     userDetails: (user, action) => {
-      user.details = action.payload.details;
+      user.details = action.payload;
+    },
+    userReset: (user, action) => {
+      user.details = {};
     },
   },
 });
 
-export const { userDetails } = slice.actions;
+export const { userDetails, userReset } = slice.actions;
 export default slice.reducer;

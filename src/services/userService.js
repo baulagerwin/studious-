@@ -1,7 +1,11 @@
 import http from "./httpService";
-import config from "../../config.json";
+import { baseURL } from "../../config.json";
 
-const register = (data) => http.post(config.userEndpoint, data);
+const url = "/users";
+
+function register(data) {
+  return http.request({ baseURL, url, method: "post", data });
+}
 
 export default {
   register,

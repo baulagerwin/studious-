@@ -43,16 +43,16 @@ function LoginForm() {
 
     try {
       setIsAnimating(true);
-      const { data } = await authService.login({
+
+      await authService.login({
         username: fields.username.value,
         password: fields.password.value,
       });
 
       setTimeout(() => {
         setIsAnimating(false);
-        localStorage.setItem(config.authTokenName, data);
-        navigator("/logging-in");
-      }, config.validationTimeInMS);
+        navigator("/");
+      }, Math.floor(Math.random() * config.validationTimeInMS) + 1);
     } catch (ex) {
       setFields({
         username: {
@@ -64,8 +64,10 @@ function LoginForm() {
           error: "",
         },
       });
+
       setTimeout(() => {
         setIsAnimating(false);
+
         const copy = { ...fields };
 
         ex.response.data.indexOf("username") > 0
