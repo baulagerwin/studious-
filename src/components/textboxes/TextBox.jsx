@@ -13,9 +13,9 @@ class TextBox extends Component {
     const { error } = this.props;
 
     if (isFocus && error)
-      return `bg-gray-100 rounded-md p-2 relative border-2 border-red-600 bg-white outline outline-gray-200 animation-shake`;
+      return `bg-white rounded-md p-2 relative border-2 border-red-600 outline outline-gray-200 animation-shake`;
     if (isFocus)
-      return `bg-gray-100 rounded-md p-2 relative border-2 border-second bg-white outline outline-gray-200`;
+      return `bg-white rounded-md p-2 relative border-2 border-second outline outline-gray-200`;
     return `bg-gray-100 rounded-md p-2 relative border-2 border-transparent outline outline-transparent`;
   };
 

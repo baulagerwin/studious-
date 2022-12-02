@@ -1,9 +1,11 @@
 import AccordionItem from "./AccordionItem";
 
-function Accordion() {
+function Accordion({ qnas }) {
   return (
-    <ul className="flex flex-col gap-2">
-      <AccordionItem />
+    <ul className="flex flex-col gap-4">
+      {qnas.map((qna) => (
+        <AccordionItem qna={qna} />
+      ))}
     </ul>
   );
 }

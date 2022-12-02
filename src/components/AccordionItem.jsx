@@ -1,24 +1,71 @@
 import { useRef, useState, useEffect } from "react";
 import AnimateHeight from "react-animate-height";
 
-function AccordionItem() {
+function AccordionItem({ qna }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSwiped, setIsSwiped] = useState(false);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [positionDiff, setPositionDiff] = useState(0);
   const itemRef = useRef(null);
   const sideButtonRef = useRef(null);
   const sideWidthRef = useRef(0);
+  const iconsWidth = "w-1/8";
 
   useEffect(() => {
+    if (isOpen) return;
     sideWidthRef.current = sideButtonRef.current.offsetWidth;
-    itemRef.current.scroll(sideWidthRef.current, 0);
-    return () => {};
-  }, []);
+    let scrollX = sideWidthRef.current - positionDiff;
+    itemRef.current.scroll(scrollX, 0);
+  }, [positionDiff]);
+
+  function handleOnMouseDown(e) {
+    e.stopPropagation();
+    setIsDown(true);
+    setStartX(e.nativeEvent.offsetX);
+  }
+
+  function handleOnMouseMove(e) {
+    e.stopPropagation();
+    let offsetX = e.nativeEvent.offsetX;
+    let swiped = isDown && startX !== offsetX;
+    let diff = offsetX - startX;
+
+    if (!swiped) return;
+
+    setIsSwiped(true);
+    setPositionDiff(diff);
+  }
+
+  function handleOnMouseUp(e) {
+    e.stopPropagation();
+    if (!isSwiped) setIsOpen(!isOpen);
+
+    setIsDown(false);
+    setIsSwiped(false);
+    setStartX(0);
+    setPositionDiff(0);
+  }
+
+  function handleOnMouseLeave(e) {
+    e.stopPropagation();
+    setIsDown(false);
+    setIsSwiped(false);
+    setStartX(0);
+    setPositionDiff(0);
+  }
 
   return (
-    <li ref={itemRef} className="border overflow-hidden">
+    <li
+      ref={itemRef}
+      className={`border shadow-sm overflow-hidden rounded-md ${
+        isOpen ? "bg-secondTint border-secondTint" : ""
+      }`}
+    >
       <div className="flex">
         <aside
           ref={sideButtonRef}
-          className="shrink-0 p-4 bg-emerald-400 text-white"
+          className={`shrink-0 p-4 flex items-center bg-emerald-500 text-white ${iconsWidth}`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -37,40 +84,44 @@ function AccordionItem() {
         </aside>
         <div className="shrink-0 w-full">
           <div
-            className={`cursor-pointer flex ${isOpen && "border-b"}`}
-            onClick={() => setIsOpen(!isOpen)}
+            className={`cursor-pointer flex select-none`}
+            onMouseDown={handleOnMouseDown}
+            onMouseUp={handleOnMouseUp}
+            onMouseMove={handleOnMouseMove}
+            onMouseLeave={handleOnMouseLeave}
           >
-            <div className="flex items-center justify-center p-1 m-3 shrink-0 bg-third text-white">
+            <div className="flex items-center justify-center px-2 m-3 shrink-0 rounded-full bg-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className={`w-5 h-5 transition-all ${
+                  isOpen ? "-rotate-45" : "rotate-0"
+                }`}
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d={!isOpen ? "M12 4.5v15m7.5-7.5h-15" : "M19.5 12h-15"}
+                  d="M12 4.5v15m7.5-7.5h-15"
                 />
               </svg>
             </div>
 
-            <div className="py-4 pr-4 text-lg">What is JavaScript?</div>
+            <div className="py-4 pr-4 text-lg font-semibold">
+              {qna.question}
+            </div>
           </div>
           <AnimateHeight duration={200} height={!isOpen ? 0 : "auto"}>
-            <div className="text-lg leading-8 p-4">
-              JavaScript, often abbreviated as JS, is a programming language
-              that is one of the core technologies of the World Wide Web,
-              alongside HTML and CSS. As of 2022, 98% of websites use JavaScript
-              on the client side for webpage behavior, often incorporating
-              third-party libraries. All major web browsers have a dedicated
-              JavaScript engine to execute the code on users' devices.
+            <div className="text-lg leading-8 px-4 pb-4 pt-2 ml-11">
+              &#8211; {qna.answer}
             </div>
           </AnimateHeight>
         </div>
-        <aside className="shrink-0 p-4 bg-red-400 text-white">
+        <aside
+          className={`shrink-0 p-4 flex items-center bg-red-500 text-white ${iconsWidth}`}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
