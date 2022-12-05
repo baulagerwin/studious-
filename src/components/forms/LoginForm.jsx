@@ -1,87 +1,14 @@
 import Center from "../../containers/Center";
 import ColumnSpanFull from "../../containers/ColumnSpanFull";
 import SubmitButton from "../../elements/SubmitButton";
-import TwoGrids from "../../layouts/TwoGrids";
-import { useState } from "react";
-import authService from "../../services/authService";
-import { useNavigate } from "react-router-dom";
+import TwoGrids4x8 from "../../layouts/TwoGrids4x8";
 import AuthUsername from "../textboxes/AuthUsername";
 import AuthPassword from "../textboxes/AuthPassword";
-import config from "../../../config.json";
 
-function LoginForm() {
-  const navigator = useNavigate();
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [fields, setFields] = useState({
-    username: {
-      value: "",
-      error: "",
-    },
-    password: {
-      value: "",
-      error: "",
-    },
-  });
-
-  function isNotValid() {
-    return !Boolean(fields.username.value) || !Boolean(fields.password.value);
-  }
-
-  function handleOnChange(e) {
-    setFields({
-      ...fields,
-      [e.target.name]: {
-        value: e.target.value,
-      },
-    });
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-
-    if (isNotValid()) return;
-
-    try {
-      setIsAnimating(true);
-
-      await authService.login({
-        username: fields.username.value,
-        password: fields.password.value,
-      });
-
-      setTimeout(() => {
-        setIsAnimating(false);
-        navigator("/");
-      }, Math.floor(Math.random() * config.validationTimeInMS) + 1);
-    } catch (ex) {
-      setFields({
-        username: {
-          value: fields.username.value,
-          error: "",
-        },
-        password: {
-          value: fields.password.value,
-          error: "",
-        },
-      });
-
-      setTimeout(() => {
-        setIsAnimating(false);
-
-        const copy = { ...fields };
-
-        ex.response.data.indexOf("username") > 0
-          ? (copy.username.error = ex.response.data)
-          : (copy.password.error = ex.response.data);
-
-        setFields(copy);
-      }, config.validationTimeInMS);
-    }
-  }
-
+function LoginForm({ fields, onChange, isValidating, onSubmit }) {
   return (
-    <form onSubmit={handleSubmit}>
-      <TwoGrids>
+    <form onSubmit={onSubmit}>
+      <TwoGrids4x8>
         <ColumnSpanFull>
           <AuthUsername
             id="usernameLogin"
@@ -89,7 +16,7 @@ function LoginForm() {
             text="Username"
             value={fields.username.value}
             error={fields.username.error}
-            onChange={handleOnChange}
+            onChange={onChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +43,7 @@ function LoginForm() {
             text="Password"
             value={fields.password.value}
             error={fields.password.error}
-            onChange={handleOnChange}
+            onChange={onChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -137,10 +64,10 @@ function LoginForm() {
         </ColumnSpanFull>
         <ColumnSpanFull>
           <Center>
-            <SubmitButton isAnimating={isAnimating}>Log In</SubmitButton>
+            <SubmitButton isValidating={isValidating}>Log In</SubmitButton>
           </Center>
         </ColumnSpanFull>
-      </TwoGrids>
+      </TwoGrids4x8>
     </form>
   );
 }

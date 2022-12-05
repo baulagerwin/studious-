@@ -15,10 +15,6 @@ const qnas = [
     answer: "Arrays, objects, functions, and dates.",
   },
   {
-    question: "What are the primitive types in JavaScript?",
-    answer: "Strings, Numbers, Boolean, null, undefined, and Symbol.",
-  },
-  {
     question: "What does element.getAttribute do?",
     answer: "It gets the value of the attribute of that element.",
   },

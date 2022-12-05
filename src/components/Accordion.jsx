@@ -4,7 +4,7 @@ function Accordion({ qnas }) {
   return (
     <ul className="flex flex-col gap-4">
       {qnas.map((qna) => (
-        <AccordionItem qna={qna} />
+        <AccordionItem key={qna.question} qna={qna} />
       ))}
     </ul>
   );

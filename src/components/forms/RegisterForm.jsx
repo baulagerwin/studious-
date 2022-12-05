@@ -1,152 +1,25 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import _ from "lodash";
-import userService from "../../services/userService";
-import authService from "../../services/authService";
 import Center from "../../containers/Center";
 import Column from "../../containers/Column";
 import ColumnSpanFull from "../../containers/ColumnSpanFull";
 import SubmitButton from "../../elements/SubmitButton";
-import TwoGrids from "../../layouts/TwoGrids";
+import TwoGrids4x8 from "../../layouts/TwoGrids4x8";
 import UserName from "../textboxes/UserName";
 import Email from "../textboxes/Email";
 import Password from "../textboxes/Password";
 import TextBox from "../textboxes/TextBox";
-import config from "../../../config.json";
 
-function RegisterForm() {
-  const navigator = useNavigate();
-  const debounceID = useRef(null);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [fields, setFields] = useState({
-    firstName: {
-      value: "",
-      error: "",
-    },
-    lastName: {
-      value: "",
-      error: "",
-    },
-    username: {
-      value: "",
-      error: "",
-    },
-    email: {
-      value: "",
-      error: "",
-    },
-    password: {
-      value: "",
-      error: "",
-    },
-  });
-
-  function isNotValid() {
-    const { firstName, lastName, username, email, password } = fields;
-
-    const isThereEmptyField =
-      !Boolean(firstName.value) ||
-      !Boolean(lastName.value) ||
-      !Boolean(username.value) ||
-      !Boolean(email.value) ||
-      !Boolean(password.value);
-
-    const isThereAnErrorField =
-      Boolean(username.error) ||
-      Boolean(email.error) ||
-      Boolean(password.error);
-
-    return isThereEmptyField || isThereAnErrorField;
-  }
-
-  function handleOnChange(e, errorMessage = "") {
-    setFields({
-      ...fields,
-      [e.target.name]: {
-        value: e.target.value,
-        error: errorMessage,
-      },
-    });
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-
-    const currentFields = { ...fields };
-    const preSubmitFields = {
-      firstName: {
-        value: currentFields.firstName.value,
-        error: "",
-      },
-      lastName: {
-        value: currentFields.lastName.value,
-        error: "",
-      },
-      username: {
-        value: currentFields.username.value,
-        error: "",
-      },
-      email: {
-        value: currentFields.email.value,
-        error: "",
-      },
-      password: {
-        value: currentFields.password.value,
-        error: "",
-      },
-    };
-
-    if (isNotValid() && !_.isEqual(preSubmitFields, currentFields)) {
-      setIsAnimating(true);
-      setFields(preSubmitFields);
-
-      clearTimeout(debounceID.current);
-      debounceID.current = setTimeout(() => {
-        setIsAnimating(false);
-        setFields(currentFields);
-      }, config.validationTimeInMS);
-
-      return;
-    }
-
-    if (!isAnimating && !isNotValid()) {
-      try {
-        setIsAnimating(true);
-        const response = await userService.register({
-          firstName: fields.firstName.value,
-          lastName: fields.lastName.value,
-          username: fields.username.value,
-          email: fields.email.value,
-          password: fields.password.value,
-        });
-
-        authService.loginWithJwt(response.headers["x-auth-token"]);
-
-        setTimeout(() => {
-          setIsAnimating(false);
-          navigator("/");
-        }, Math.floor(Math.random() * config.validationTimeInMS) + 1);
-      } catch (ex) {
-        setIsAnimating(false);
-        if (ex.response && ex.response.status === 400) {
-          const copy = { ...fields };
-          copy.username.error = ex.response.data;
-          setFields(copy);
-        }
-      }
-    }
-  }
-
+function RegisterForm({ fields, onChange, isValidating, onSubmit }) {
   return (
-    <form onSubmit={handleSubmit}>
-      <TwoGrids>
+    <form onSubmit={onSubmit}>
+      <TwoGrids4x8>
         <Column>
           <TextBox
             id="firstName"
             name="firstName"
             text="First name"
             value={fields.firstName.value}
-            onChange={handleOnChange}
+            onChange={onChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +44,7 @@ function RegisterForm() {
             name="lastName"
             text="Last name"
             value={fields.lastName.value}
-            onChange={handleOnChange}
+            onChange={onChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +70,7 @@ function RegisterForm() {
             text="Username"
             value={fields.username.value}
             error={fields.username.error}
-            onChange={handleOnChange}
+            onChange={onChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +96,7 @@ function RegisterForm() {
             text="Email"
             value={fields.email.value}
             error={fields.email.error}
-            onChange={handleOnChange}
+            onChange={onChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +123,7 @@ function RegisterForm() {
             text="Password"
             value={fields.password.value}
             error={fields.password.error}
-            onChange={handleOnChange}
+            onChange={onChange}
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -271,12 +144,12 @@ function RegisterForm() {
         </ColumnSpanFull>
         <ColumnSpanFull>
           <Center>
-            <SubmitButton isAnimating={isAnimating}>
+            <SubmitButton isValidating={isValidating}>
               Create Account
             </SubmitButton>
           </Center>
         </ColumnSpanFull>
-      </TwoGrids>
+      </TwoGrids4x8>
     </form>
   );
 }
