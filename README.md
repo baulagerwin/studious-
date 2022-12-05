@@ -1,1 +1,1 @@
-# studious-frontend
+# studious
