@@ -66,7 +66,7 @@ function HomePage({ user }) {
             <TextBox
               id="search"
               name="search"
-              text="Search question"
+              text="Search"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

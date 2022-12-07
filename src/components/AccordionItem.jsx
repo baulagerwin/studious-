@@ -9,13 +9,11 @@ function AccordionItem({ qna }) {
   const [positionDiff, setPositionDiff] = useState(0);
   const itemRef = useRef(null);
   const sideButtonRef = useRef(null);
-  const sideWidthRef = useRef(0);
   const iconsWidth = "w-1/8";
 
   useEffect(() => {
     if (isOpen) return;
-    sideWidthRef.current = sideButtonRef.current.offsetWidth;
-    let scrollX = sideWidthRef.current - positionDiff;
+    let scrollX = sideButtonRef.current.offsetWidth - positionDiff;
     itemRef.current.scroll(scrollX, 0);
   }, [positionDiff]);
 

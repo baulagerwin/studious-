@@ -2,9 +2,9 @@ import { useEffect } from "react";
 
 function useCloseDropDown(closeDropDown) {
   useEffect(() => {
-    document.body.addEventListener("click", closeDropDown);
+    document.body.addEventListener("mousedown", closeDropDown);
 
-    return () => document.body.removeEventListener("click", closeDropDown);
+    return () => document.body.removeEventListener("mousedown", closeDropDown);
   }, []);
 }
 
