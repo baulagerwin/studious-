@@ -1,13 +1,15 @@
-import { useRef } from "react";
-import { useState } from "react";
-import useCloseDropDown from "../hooks/useCloseDropDown";
+import { useState, useRef, useEffect } from "react";
 import DropDownMenuItem from "./DropDownMenuItem";
 
-function DropDownMenu({ name }) {
+function DropDownMenu({ name, list }) {
   const [isOpen, setIsOpen] = useState(false);
   const unorderedListRef = useRef(null);
 
-  useCloseDropDown(closeDropDown);
+  useEffect(() => {
+    document.body.addEventListener("mousedown", closeDropDown);
+
+    return () => document.body.removeEventListener("mousedown", closeDropDown);
+  }, []);
 
   function closeDropDown(e) {
     e.stopPropagation();
@@ -20,6 +22,8 @@ function DropDownMenu({ name }) {
       }
 
     if (e.target.name !== name && !ulClicked) setIsOpen(false);
+
+    ulClicked = false;
   }
 
   function handleOnClick(e) {
@@ -74,9 +78,9 @@ function DropDownMenu({ name }) {
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <DropDownMenuItem isOpen={isOpen} onOpen={setIsOpen} />
-        <DropDownMenuItem isOpen={isOpen} onOpen={setIsOpen} />
-        <DropDownMenuItem isOpen={isOpen} onOpen={setIsOpen} />
+        {list.map((item) => {
+          <DropDownMenuItem name={item.name} onOpen={setIsOpen} />;
+        })}
       </ul>
     </div>
   );

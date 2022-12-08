@@ -4,8 +4,8 @@ import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NavBar from "./components/NavBar";
-import Logout from "./components/auth/Logout";
-import Login from "./components/auth/Login";
+import Logout from "./middleware/Logout";
+import Login from "./middleware/Login";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 

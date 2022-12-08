@@ -6,7 +6,7 @@ import subjectService from "../services/subjectService";
 import HalfContainer from "../containers/HalfContainer";
 import Container from "../containers/Container";
 import RegisterForm from "../components/forms/RegisterForm";
-import AuthIntro from "../components/auth/AuthIntro";
+import RegisterFormText from "../components/RegisterFormText";
 import config from "../../config.json";
 
 function RegisterPage() {
@@ -144,14 +144,7 @@ function RegisterPage() {
   return (
     <Container>
       <HalfContainer>
-        <AuthIntro
-          firstWords="Start for"
-          secondWord="free"
-          thirdWords="Create new account"
-          fourthWords="Already a Member?"
-          fifthWord="Log in"
-          link="/login"
-        />
+        <RegisterFormText />
         <RegisterForm
           fields={fields}
           onChange={handleOnChange}

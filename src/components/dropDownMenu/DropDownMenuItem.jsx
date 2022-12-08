@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-function DropDownMenuItem({ isOpen, onOpen }) {
+function DropDownMenuItem({ name, onOpen }) {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [positionDiff, setPositionDiff] = useState(0);
@@ -73,7 +73,7 @@ function DropDownMenuItem({ isOpen, onOpen }) {
         onMouseUp={handleOnMouseUp}
         onMouseLeave={handleOnMouseLeave}
       >
-        <div>Unclassified</div>
+        <div>{name}</div>
         <span>&times;</span>
         <div className="shrink-0">50</div>
       </div>

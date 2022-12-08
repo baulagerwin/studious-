@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Container from "../containers/Container";
 import LoginForm from "../components/forms/LoginForm";
 import HalfContainer from "../containers/HalfContainer";
-import AuthIntro from "../components/auth/AuthIntro";
+import LoginFormText from "../components/LoginFormText";
 
 function LoginPage() {
   const navigator = useNavigate();
@@ -93,14 +93,7 @@ function LoginPage() {
   return (
     <Container>
       <HalfContainer>
-        <AuthIntro
-          firstWords="Skyrocket your"
-          secondWord="studies"
-          thirdWords="Welcome to Studious"
-          fourthWords="Don't have an account? Try to register"
-          fifthWord="here"
-          link="/register"
-        />
+        <LoginFormText />
         <LoginForm
           fields={fields}
           onChange={handleOnChange}
