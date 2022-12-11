@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Container from "../containers/Container";
 import LoginForm from "../components/forms/LoginForm";
 import HalfContainer from "../containers/HalfContainer";
-import LoginFormText from "../components/LoginFormText";
+import LoginFormText from "../components/forms/LoginFormText";
 
 function LoginPage() {
   const navigator = useNavigate();

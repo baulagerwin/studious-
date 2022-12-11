@@ -5,11 +5,16 @@ import AddButton from "../elements/AddButton";
 import ColumnSpanFull from "../containers/ColumnSpanFull";
 import TextBox from "./textboxes/TextBox";
 
-function Paraphernalia({ filterBy, subjects }) {
+function Paraphernalia({ filterBy, onFilter, subjects }) {
   return (
     <FiveGrids4x5>
       <Column>
-        <DropDownMenu name="filterSubjects" list={subjects} />
+        <DropDownMenu
+          name="filterSubjects"
+          filterBy={filterBy}
+          onFilter={onFilter}
+          list={subjects}
+        />
       </Column>
       <Column>
         <AddButton
@@ -32,9 +37,7 @@ function Paraphernalia({ filterBy, subjects }) {
         />
       </Column>
       <Column />
-      <Column>
-        <DropDownMenu name="sortQnas" />
-      </Column>
+      <Column>{/* <DropDownMenu name="sortQnas" /> */}</Column>
       <Column>
         <AddButton
           text="New Q & A"

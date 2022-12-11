@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-function DropDownMenuItem({ name, onOpen }) {
+function DropDownMenuItem({ item, filterBy, onFilter, onOpen }) {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [positionDiff, setPositionDiff] = useState(0);
@@ -35,6 +35,7 @@ function DropDownMenuItem({ name, onOpen }) {
     setPositionDiff(0);
 
     if (startX !== e.nativeEvent.pageX) return;
+    onFilter(item.name);
     onOpen(false);
   }
 
@@ -46,7 +47,7 @@ function DropDownMenuItem({ name, onOpen }) {
   }
 
   return (
-    <li ref={itemRef} className="flex overflow-hidden rounded-md w-full">
+    <div ref={itemRef} className="flex overflow-hidden rounded-md w-full">
       <aside
         ref={sideButtonRef}
         className={`shrink-0 p-3 flex items-center bg-emerald-500 text-white ${iconsWidth}`}
@@ -67,13 +68,15 @@ function DropDownMenuItem({ name, onOpen }) {
         </svg>
       </aside>
       <div
-        className="shrink-0 w-full flex items-center gap-1 px-4 py-3 hover:bg-secondTint select-none"
+        className={`shrink-0 w-full flex items-center gap-1 px-4 py-3 hover:bg-secondTint select-none ${
+          filterBy === item.name ? "bg-secondTint" : ""
+        }`}
         onMouseDown={handleOnMouseDown}
         onMouseMove={handleOnMouseMove}
         onMouseUp={handleOnMouseUp}
         onMouseLeave={handleOnMouseLeave}
       >
-        <div>{name}</div>
+        <div>{item.name}</div>
         <span>&times;</span>
         <div className="shrink-0">50</div>
       </div>
@@ -95,7 +98,7 @@ function DropDownMenuItem({ name, onOpen }) {
           />
         </svg>
       </aside>
-    </li>
+    </div>
   );
 }
 

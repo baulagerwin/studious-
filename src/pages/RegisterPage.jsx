@@ -6,7 +6,7 @@ import subjectService from "../services/subjectService";
 import HalfContainer from "../containers/HalfContainer";
 import Container from "../containers/Container";
 import RegisterForm from "../components/forms/RegisterForm";
-import RegisterFormText from "../components/RegisterFormText";
+import RegisterFormText from "../components/forms/RegisterFormText";
 import config from "../../config.json";
 
 function RegisterPage() {

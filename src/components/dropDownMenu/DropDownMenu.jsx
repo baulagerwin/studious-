@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import DropDownMenuItem from "./DropDownMenuItem";
 
-function DropDownMenu({ name, list }) {
+function DropDownMenu({ name, filterBy, onFilter, list }) {
   const [isOpen, setIsOpen] = useState(false);
   const unorderedListRef = useRef(null);
+  let limitLength = 6;
 
   useEffect(() => {
     document.body.addEventListener("mousedown", closeDropDown);
@@ -49,7 +50,7 @@ function DropDownMenu({ name, list }) {
             handleOnClick(e);
           }}
         >
-          All Subjects
+          {Boolean(filterBy) ? filterBy : "All Subjects"}
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -71,16 +72,22 @@ function DropDownMenu({ name, list }) {
         </svg>
       </button>
 
-      {/* If the items is greater than 6 then set the overflow to auto and set a specific height */}
       <ul
         ref={unorderedListRef}
-        className={`absolute left-0 top-full translate-y-1 w-full border rounded-md cursor-pointer bg-white z-10 shadow h-auto ${
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`absolute left-0 top-full translate-y-1 w-full border rounded-md cursor-pointer bg-white z-10 shadow ${
+          list.length > limitLength ? "h-60 overflow-y-auto" : "h-auto"
+        } ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
-        {list.map((item) => {
-          <DropDownMenuItem name={item.name} onOpen={setIsOpen} />;
-        })}
+        {list.map((item) => (
+          <li key={item._id}>
+            <DropDownMenuItem
+              item={item}
+              filterBy={filterBy}
+              onFilter={onFilter}
+              onOpen={setIsOpen}
+            />
+          </li>
+        ))}
       </ul>
     </div>
   );
