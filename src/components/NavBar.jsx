@@ -8,7 +8,7 @@ function NavBar() {
   const isEmpty = _.isEmpty(userDetails);
 
   return (
-    <nav className="border-b shadow-lg shadow-slate-100">
+    <nav className="border-b shadow-lg shadow-slate-100 fixed w-screen bg-white z-20">
       <div className="container mx-auto py-2 px-8 flex justify-between items-center">
         <Link to="/" className="text-3xl font-bold text-third">
           Studious

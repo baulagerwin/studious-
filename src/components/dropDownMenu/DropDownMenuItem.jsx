@@ -78,7 +78,7 @@ function DropDownMenuItem({ item, filterBy, onFilter, onOpen }) {
       >
         <div>{item.name}</div>
         <span>&times;</span>
-        <div className="shrink-0">50</div>
+        <div className="shrink-0">{item.count}</div>
       </div>
       <aside
         className={`shrink-0 p-3 flex items-center bg-red-500 text-white ${iconsWidth}`}
