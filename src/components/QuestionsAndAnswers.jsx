@@ -1,6 +1,6 @@
 import Accordion from "../components/accordion/Accordion";
 
-function QuestionsAndAnswers({ qnas }) {
+function QuestionsAndAnswers({ qnas, onFilterOpen }) {
   return (
     <>
       <p className="text-lg font-semibold">
@@ -9,7 +9,7 @@ function QuestionsAndAnswers({ qnas }) {
           : "There are no question and answer in your storage."}
       </p>
 
-      <Accordion qnas={qnas} />
+      <Accordion qnas={qnas} onFilterOpen={onFilterOpen} />
     </>
   );
 }

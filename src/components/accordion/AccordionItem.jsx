@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import AnimateHeight from "react-animate-height";
 
-function AccordionItem({ qna }) {
+function AccordionItem({ qna, onFilterOpen }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSwiped, setIsSwiped] = useState(false);
   const [isDown, setIsDown] = useState(false);
@@ -43,6 +43,8 @@ function AccordionItem({ qna }) {
     setIsSwiped(false);
     setStartX(0);
     setPositionDiff(0);
+
+    onFilterOpen(e, false);
   }
 
   function handleOnMouseLeave(e) {

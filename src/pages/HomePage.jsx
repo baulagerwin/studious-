@@ -7,8 +7,13 @@ import mockSubjects from "./subjects";
 import mockQnas from "./qnas";
 import getSubjectsWithCount from "./getSubjectsWithCount";
 import FlexColGap4 from "../layouts/FlexColGap4";
+import useFilterOpen from "../hooks/useFilterOpen";
+import useSortOpen from "../hooks/useSortOpen";
 
 function HomePage() {
+  const [isFilterOpen, handleFilterOpen] = useFilterOpen();
+  const [isSortOpen, handleSortOpen] = useSortOpen();
+
   const [filter, setFilter] = useState("All Subjects");
 
   let qnas = mockQnas;
@@ -19,12 +24,14 @@ function HomePage() {
       <TwoThirdsContainer>
         <FlexColGap4>
           <Paraphernalia
+            isFilterOpen={isFilterOpen}
+            onFilterOpen={handleFilterOpen}
             filterBy={filter}
             onFilter={setFilter}
             subjects={subjects}
           />
           <hr className="mb-10" />
-          <QuestionsAndAnswers qnas={qnas} />
+          <QuestionsAndAnswers qnas={qnas} onFilterOpen={handleFilterOpen} />
           <div className="flex justify-end">
             <div className="flex text-white rounded-md">
               <button
