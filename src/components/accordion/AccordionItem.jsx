@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import AnimateHeight from "react-animate-height";
 
-function AccordionItem({ qna, onFilterOpen }) {
+function AccordionItem({ qna, onFilterOpen, onSortOpen, onPaginationOpen }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSwiped, setIsSwiped] = useState(false);
   const [isDown, setIsDown] = useState(false);
@@ -19,12 +19,19 @@ function AccordionItem({ qna, onFilterOpen }) {
 
   function handleOnMouseDown(e) {
     e.stopPropagation();
+
+    // Components that needs to be closed
+    onFilterOpen(e, false);
+    onSortOpen(e, false);
+    onPaginationOpen(e, false);
+
     setIsDown(true);
     setStartX(e.nativeEvent.offsetX);
   }
 
   function handleOnMouseMove(e) {
     e.stopPropagation();
+
     let offsetX = e.nativeEvent.offsetX;
     let swiped = isDown && startX !== offsetX;
     let diff = offsetX - startX;
@@ -37,18 +44,18 @@ function AccordionItem({ qna, onFilterOpen }) {
 
   function handleOnMouseUp(e) {
     e.stopPropagation();
+
     if (!isSwiped) setIsOpen(!isOpen);
 
     setIsDown(false);
     setIsSwiped(false);
     setStartX(0);
     setPositionDiff(0);
-
-    onFilterOpen(e, false);
   }
 
   function handleOnMouseLeave(e) {
     e.stopPropagation();
+
     setIsDown(false);
     setIsSwiped(false);
     setStartX(0);

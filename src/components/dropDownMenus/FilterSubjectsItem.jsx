@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-function DropDownMenuItem({ value, onChange, onOpen, item }) {
+function FilterSubjectsItem({ filterBy, onFilter, onOpen, item }) {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [positionDiff, setPositionDiff] = useState(0);
@@ -35,7 +35,7 @@ function DropDownMenuItem({ value, onChange, onOpen, item }) {
     setPositionDiff(0);
 
     if (startX !== e.nativeEvent.pageX) return;
-    onChange(item.name);
+    onFilter(item.name);
     onOpen(e, false);
   }
 
@@ -69,10 +69,10 @@ function DropDownMenuItem({ value, onChange, onOpen, item }) {
       </aside>
       <div
         className={`shrink-0 w-full flex items-center gap-1 px-4 py-3 hover:bg-secondTint select-none ${
-          value === item.name ? "bg-secondTint" : ""
+          filterBy === item.name ? "bg-secondTint" : ""
         }`}
         onMouseDown={handleOnMouseDown}
-        onMouseMove={handleOnMouseMove}
+        onMouseMove={item.swipeable ? handleOnMouseMove : null}
         onMouseUp={handleOnMouseUp}
         onMouseLeave={handleOnMouseLeave}
       >
@@ -102,4 +102,4 @@ function DropDownMenuItem({ value, onChange, onOpen, item }) {
   );
 }
 
-export default DropDownMenuItem;
+export default FilterSubjectsItem;

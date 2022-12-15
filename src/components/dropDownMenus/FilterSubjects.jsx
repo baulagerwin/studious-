@@ -1,6 +1,6 @@
-import DropDownMenuItem from "./DropDownMenuItem";
+import FilterSubjectsItem from "./FilterSubjectsItem";
 
-function DropDownMenuFilter({
+function FilterSubjects({
   isFilterOpen,
   onFilterOpen,
   filterBy,
@@ -20,7 +20,7 @@ function DropDownMenuFilter({
         onClick={(e) => onFilterOpen(e, !isFilterOpen)}
       >
         <div id="filterText" className="text-md">
-          {Boolean(filterBy) ? filterBy : "All Subjects"}
+          {filterBy}
         </div>
         <svg
           id="filterIcon"
@@ -43,13 +43,13 @@ function DropDownMenuFilter({
         id="filterList"
         className={`absolute left-0 top-full translate-y-1 w-full border rounded-md cursor-pointer bg-white z-10 shadow ${
           subjects.length > limitLength ? "h-60 overflow-y-auto" : "h-auto"
-        } ${isFilterOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        } ${isFilterOpen ? "visible" : "invisible"}`}
       >
         {subjects.map((item) => (
           <li key={item._id}>
-            <DropDownMenuItem
-              value={filterBy}
-              onChange={onFilter}
+            <FilterSubjectsItem
+              filterBy={filterBy}
+              onFilter={onFilter}
               onOpen={onFilterOpen}
               item={item}
             />
@@ -60,4 +60,4 @@ function DropDownMenuFilter({
   );
 }
 
-export default DropDownMenuFilter;
+export default FilterSubjects;

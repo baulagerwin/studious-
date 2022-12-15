@@ -1,6 +1,6 @@
-import DropDownMenuItem from "./DropDownMenuItem";
+import SortQnasItem from "./SortQnasItem";
 
-function DropDownMenuSort({ isSortOpen, onSortOpen, sortBy, onSort, options }) {
+function SortQnas({ isSortOpen, onSortOpen, sortBy, onSort, options }) {
   let limitLength = 6;
 
   return (
@@ -37,13 +37,13 @@ function DropDownMenuSort({ isSortOpen, onSortOpen, sortBy, onSort, options }) {
         id="sortList"
         className={`absolute left-0 top-full translate-y-1 w-full border rounded-md cursor-pointer bg-white z-10 shadow ${
           options.length > limitLength ? "h-60 overflow-y-auto" : "h-auto"
-        } ${isSortOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        } ${isSortOpen ? "visible" : "invisible"}`}
       >
         {options.map((item) => (
           <li key={item._id}>
-            <DropDownMenuItem
-              value={sortBy}
-              onChange={onSort}
+            <SortQnasItem
+              sortBy={sortBy}
+              onSort={onSort}
               onOpen={onSortOpen}
               item={item}
             />
@@ -54,4 +54,4 @@ function DropDownMenuSort({ isSortOpen, onSortOpen, sortBy, onSort, options }) {
   );
 }
 
-export default DropDownMenuSort;
+export default SortQnas;

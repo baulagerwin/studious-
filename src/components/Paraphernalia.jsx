@@ -1,9 +1,10 @@
 import FiveGrids4x5 from "../layouts/FiveGrids4x5";
 import Column from "../containers/Column";
-import DropDownMenuFilter from "./dropDownMenu/DropDownMenuFilter";
 import AddButton from "../elements/AddButton";
 import ColumnSpanFull from "../containers/ColumnSpanFull";
 import TextBox from "./textboxes/TextBox";
+import FilterSubjects from "./dropDownMenus/FilterSubjects";
+import SortQnas from "./dropDownMenus/SortQnas";
 
 function Paraphernalia({
   isFilterOpen,
@@ -11,11 +12,16 @@ function Paraphernalia({
   filterBy,
   onFilter,
   subjects,
+  isSortOpen,
+  onSortOpen,
+  sortBy,
+  onSort,
+  options,
 }) {
   return (
     <FiveGrids4x5>
       <Column>
-        <DropDownMenuFilter
+        <FilterSubjects
           isFilterOpen={isFilterOpen}
           onFilterOpen={onFilterOpen}
           filterBy={filterBy}
@@ -45,7 +51,13 @@ function Paraphernalia({
       </Column>
       <Column />
       <Column>
-        {/* <DropDownMenu filterBy={filterBy} onFilter={onFilter} list={subjects} /> */}
+        <SortQnas
+          isSortOpen={isSortOpen}
+          onSortOpen={onSortOpen}
+          sortBy={sortBy}
+          onSort={onSort}
+          options={options}
+        />
       </Column>
       <Column>
         <AddButton
