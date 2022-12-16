@@ -2,29 +2,37 @@ import Container from "../containers/Container";
 import Paraphernalia from "../components/Paraphernalia";
 import TwoThirdsContainer from "../containers/TwoThirdsContainer";
 import QuestionsAndAnswers from "../components/QuestionsAndAnswers";
-import { useState } from "react";
 import mockSubjects from "./subjects";
 import mockQnas from "./qnas";
 import getSubjects from "./getSubjects";
 import FlexColGap4 from "../layouts/FlexColGap4";
+import useSort from "../hooks/useSort";
 import useFilterOpen from "../hooks/useFilterOpen";
 import useSortOpen from "../hooks/useSortOpen";
+import usePagination from "../hooks/usePagination";
 import usePaginationOpen from "../hooks/usePaginationOpen";
-import sorter from "./sorter";
-import Pagination from "../components/Pagination";
+import useFilter from "../hooks/useFilter";
+import useCurrentPage from "../hooks/useCurrentPage";
 
 function HomePage() {
-  const [isFilterOpen, handleFilterOpen] = useFilterOpen();
-  const [isSortOpen, handleSortOpen] = useSortOpen();
-  const [isPaginationOpen, handlePaginationOpen] = usePaginationOpen();
-
-  const [filter, setFilter] = useState("All Subjects");
-  const [sort, setSort] = useState("A - Z");
-  const [currentPage, setCurrentPage] = useState(1);
+  let pageSize = 5;
 
   let qnas = mockQnas;
   let subjects = getSubjects(mockSubjects, qnas);
-  const pages = [1, 2, 3];
+
+  const [isFilterOpen, onFilterOpen] = useFilterOpen();
+  const [isSortOpen, onSortOpen] = useSortOpen();
+  const [isPaginationOpen, onPaginationOpen] = usePaginationOpen();
+
+  const [currentPage, onPageChange] = useCurrentPage();
+  const [filter, onFilter, filtered] = useFilter(onPageChange, qnas);
+  const [sort, onSort, sorters, sorted] = useSort(filtered);
+  const [pages, paginatedList, nextPage, prevPage] = usePagination(
+    currentPage,
+    onPageChange,
+    pageSize,
+    sorted
+  );
 
   return (
     <Container>
@@ -32,29 +40,29 @@ function HomePage() {
         <FlexColGap4>
           <Paraphernalia
             isFilterOpen={isFilterOpen}
-            onFilterOpen={handleFilterOpen}
+            onFilterOpen={onFilterOpen}
             filterBy={filter}
-            onFilter={setFilter}
+            onFilter={onFilter}
             subjects={subjects}
             isSortOpen={isSortOpen}
-            onSortOpen={handleSortOpen}
+            onSortOpen={onSortOpen}
             sortBy={sort}
-            onSort={setSort}
-            options={sorter}
+            onSort={onSort}
+            options={sorters}
           />
           <hr className="mb-10" />
           <QuestionsAndAnswers
-            qnas={qnas}
-            onFilterOpen={handleFilterOpen}
-            onSortOpen={handleSortOpen}
-            onPaginationOpen={handlePaginationOpen}
-          />
-          <Pagination
+            qnas={filtered}
+            onFilterOpen={onFilterOpen}
+            onSortOpen={onSortOpen}
             isPaginationOpen={isPaginationOpen}
-            onPaginationOpen={handlePaginationOpen}
+            onPaginationOpen={onPaginationOpen}
             currentPage={currentPage}
-            onPageChange={setCurrentPage}
             pages={pages}
+            paginatedQnas={paginatedList}
+            onPageChange={onPageChange}
+            prevPage={prevPage}
+            nextPage={nextPage}
           />
         </FlexColGap4>
       </TwoThirdsContainer>

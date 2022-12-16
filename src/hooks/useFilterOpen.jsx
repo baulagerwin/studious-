@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 function useFilterOpen() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  function handleFilterOpen(e, value) {
+  function onFilterOpen(e, value) {
     e.stopPropagation();
     setIsFilterOpen(value);
   }
@@ -25,7 +25,7 @@ function useFilterOpen() {
     setIsFilterOpen(false);
   }
 
-  return [isFilterOpen, handleFilterOpen];
+  return [isFilterOpen, onFilterOpen];
 }
 
 export default useFilterOpen;

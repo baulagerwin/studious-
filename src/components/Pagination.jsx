@@ -6,9 +6,11 @@ function Pagination({
   currentPage,
   onPageChange,
   pages,
+  prevPage,
+  nextPage,
 }) {
   return (
-    <div className="flex text-zinc-600 rounded-md self-end relative">
+    <div className="flex relative">
       <ToolTip
         isPaginationOpen={isPaginationOpen}
         onPaginationOpen={onPaginationOpen}
@@ -18,15 +20,50 @@ function Pagination({
       />
       <button
         type="button"
-        className="flex justify-center items-center rounded-tl-md rounded-bl-md hover:bg-second hover:text-white active:text-first shadow-lg h-10 w-10 relative after:content-[''] after:bg-grey after:absolute after:w-px after:opacity-100 after:h-1/2 after:left-full after:top-1/2 after:-translate-y-1/2 after:-translate-x-1/2"
+        id="paginationButton"
+        className="flex items-center gap-1 border px-3 py-1 rounded-tl-md rounded-bl-md"
+        onClick={(e) => onPaginationOpen(e, !isPaginationOpen)}
+      >
+        <div
+          id="paginationContainer"
+          className="text-md font-medium flex items-center gap-1"
+        >
+          <span id="paginationCurrentPage">{currentPage}</span>
+          <span id="paginationDash" className="text-slate-400 text-xs">
+            /
+          </span>
+          <span id="paginationPageLength" className="text-slate-400">
+            {pages.length}
+          </span>
+        </div>
+        <svg
+          id="paginationIcon"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={3}
+          stroke="currentColor"
+          className={`w-4 h-4 text-slate-400`}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+          />
+        </svg>
+      </button>
+      <button
+        type="button"
+        className="px-3 py-1 border-t border-b text-slate-400 hover:bg-slate-200 hover:text-black"
+        onClick={prevPage}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={4}
+          strokeWidth={3}
           stroke="currentColor"
-          className="w-5 h-5"
+          className="w-4 h-4"
         >
           <path
             strokeLinecap="round"
@@ -37,25 +74,16 @@ function Pagination({
       </button>
       <button
         type="button"
-        id="paginationButton"
-        className={`flex justify-center items-center border-transparent ${
-          isPaginationOpen ? "bg-second text-white rounded-md" : ""
-        } hover:bg-second hover:text-white active:text-first hover:rounded-md text-xl h-10 w-10 px-0.5 shadow-lg cursor-pointer`}
-        onClick={(e) => onPaginationOpen(e, !isPaginationOpen)}
-      >
-        {currentPage}
-      </button>
-      <button
-        type="button"
-        className="flex justify-center items-center rounded-br-md rounded-tr-md hover:bg-second hover:text-white active:text-first shadow-lg h-10 w-10 relative before:content-[''] before:bg-grey before:absolute before:w-px before:opacity-100 before:h-1/2 before:left-0 before:top-1/2 before:-translate-y-1/2 before:-translate-x-1/2"
+        className="px-3 py-1 border rounded-tr-md rounded-br-md text-slate-400 hover:bg-slate-200 hover:text-black"
+        onClick={nextPage}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={4}
+          strokeWidth={3}
           stroke="currentColor"
-          className="w-5 h-5"
+          className="w-4 h-4"
         >
           <path
             strokeLinecap="round"

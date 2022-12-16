@@ -18,6 +18,11 @@ function usePaginationOpen() {
     e.stopPropagation();
 
     if (e.target.id === "paginationButton") return;
+    if (e.target.id === "paginationContainer") return;
+    if (e.target.id === "paginationCurrentPage") return;
+    if (e.target.id === "paginationDash") return;
+    if (e.target.id === "paginationPageLength") return;
+    if (e.target.id === "paginationIcon") return;
     if (e.target.id === "paginationToolTip") return;
 
     setIsPaginationOpen(false);
