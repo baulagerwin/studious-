@@ -4,7 +4,7 @@ function FilterSubjects({
   isFilterOpen,
   onFilterOpen,
   filterBy,
-  onFilter,
+  onFilterBy,
   subjects,
 }) {
   let limitLength = 6;
@@ -49,7 +49,7 @@ function FilterSubjects({
           <li key={item._id}>
             <FilterSubjectsItem
               filterBy={filterBy}
-              onFilter={onFilter}
+              onFilterBy={onFilterBy}
               onOpen={onFilterOpen}
               item={item}
             />

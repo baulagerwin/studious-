@@ -10,7 +10,7 @@ function Paraphernalia({
   isFilterOpen,
   onFilterOpen,
   filterBy,
-  onFilter,
+  onFilterBy,
   subjects,
   isSortOpen,
   onSortOpen,
@@ -27,7 +27,7 @@ function Paraphernalia({
           isFilterOpen={isFilterOpen}
           onFilterOpen={onFilterOpen}
           filterBy={filterBy}
-          onFilter={onFilter}
+          onFilterBy={onFilterBy}
           subjects={subjects}
         />
       </Column>

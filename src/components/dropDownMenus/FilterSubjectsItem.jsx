@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-function FilterSubjectsItem({ filterBy, onFilter, onOpen, item }) {
+function FilterSubjectsItem({ filterBy, onFilterBy, onOpen, item }) {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [positionDiff, setPositionDiff] = useState(0);
@@ -35,7 +35,7 @@ function FilterSubjectsItem({ filterBy, onFilter, onOpen, item }) {
     setPositionDiff(0);
 
     if (startX !== e.nativeEvent.pageX) return;
-    onFilter(item.name);
+    onFilterBy(item.name);
     onOpen(e, false);
   }
 

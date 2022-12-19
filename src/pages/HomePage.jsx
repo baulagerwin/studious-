@@ -24,12 +24,16 @@ function HomePage() {
   let qnas = mockQnas;
   let subjects = useInitSubjects(mockSubjects, qnas);
 
-  const [currentPage, onPageChange] = useCurrentPage(1);
-  const [searchBy, onChange, onEmptySearchBy] = useSearchBy("", initialFilter);
-  const [filterBy, onFilter] = useFilterBy(
+  const [currentPage, onPageChange, onInitialPage] = useCurrentPage(1);
+  const [searchBy, onChange, onEmptySearchBy, setTheFilterBy] = useSearchBy(
+    "",
+    initialFilter
+  );
+  const [filterBy, onFilterBy] = useFilterBy(
     initialFilter,
-    onPageChange,
-    onEmptySearchBy
+    onInitialPage,
+    onEmptySearchBy,
+    setTheFilterBy
   );
 
   const filtered = useFilter(initialFilter, filterBy, qnas);
@@ -54,7 +58,7 @@ function HomePage() {
             isFilterOpen={isFilterOpen}
             onFilterOpen={onFilterOpen}
             filterBy={filterBy}
-            onFilter={onFilter}
+            onFilterBy={onFilterBy}
             subjects={subjects}
             isSortOpen={isSortOpen}
             onSortOpen={onSortOpen}

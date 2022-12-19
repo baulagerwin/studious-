@@ -1,12 +1,23 @@
 import { useState } from "react";
 
-function useFilterBy(initialFilterBy, onPageChange, onSearchByEmpty) {
+function useFilterBy(
+  initialFilterBy,
+  onInitialPage,
+  onSearchByEmpty,
+  setTheFilterBy
+) {
   const [filterBy, setFilterBy] = useState(initialFilterBy);
+  setTheFilterBy(handleTheSetFilterBy);
+
+  function handleTheSetFilterBy(value) {
+    onInitialPage();
+    setFilterBy(value);
+  }
 
   function handleFilterBy(value) {
     if (value === filterBy) return;
 
-    onPageChange(1);
+    onInitialPage();
     onSearchByEmpty();
     setFilterBy(value);
   }
