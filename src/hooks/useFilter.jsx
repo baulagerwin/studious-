@@ -1,24 +1,7 @@
-import { useState } from "react";
+function useFilter(initialFilter, filterBy, qnas) {
+  if (filterBy === initialFilter) return qnas;
 
-function useFilter(onPageChange, qnas) {
-  let initialFilter = "All Subjects";
-
-  const [filter, setFilter] = useState(initialFilter);
-
-  function handleFilter(value) {
-    onPageChange(1);
-    setFilter(value);
-  }
-
-  const filtered = filterQnas();
-
-  function filterQnas() {
-    if (filter === initialFilter) return qnas;
-
-    return qnas.filter((qna) => qna.subject.name === filter);
-  }
-
-  return [filter, handleFilter, filtered];
+  return qnas.filter((item) => item.subject.name === filterBy);
 }
 
 export default useFilter;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-function useSort(list) {
-  const [sort, setSort] = useState("A - Z");
+function useSort(initialSort, list) {
+  const [sort, setSort] = useState(initialSort);
   let sorters = [
     {
       _id: 1,

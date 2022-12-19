@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 
-function usePaginationOpen() {
+function usePaginationOpen(paginatedList) {
   const [isPaginationOpen, setIsPaginationOpen] = useState(false);
 
   function handlePaginationOpen(e, value) {
     e.stopPropagation();
+    if (!paginatedList.length) return;
+
     setIsPaginationOpen(value);
   }
 

@@ -17,6 +17,8 @@ function Paraphernalia({
   sortBy,
   onSort,
   options,
+  searchBy,
+  onChange,
 }) {
   return (
     <FiveGrids4x5>
@@ -83,6 +85,8 @@ function Paraphernalia({
           id="search"
           name="search"
           text="Search"
+          value={searchBy}
+          onChange={onChange}
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -1,4 +1,4 @@
-function getSubjects(subjects, qnas) {
+function useInitSubjects(subjects, qnas) {
   let subjectsWithCount = [];
 
   for (let subject of subjects) {
@@ -21,4 +21,4 @@ function getSubjects(subjects, qnas) {
   ];
 }
 
-export default getSubjects;
+export default useInitSubjects;

@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-function useCurrentPage() {
-  let initialPage = 1;
-
+function useCurrentPage(initialPage) {
   const [currentPage, setCurrentPage] = useState(initialPage);
 
   return [currentPage, setCurrentPage];

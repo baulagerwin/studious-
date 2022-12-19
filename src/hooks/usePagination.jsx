@@ -19,6 +19,8 @@ function usePagination(currentPage, onPageChange, pageSize, list) {
   }
 
   function nextPage() {
+    if (!list.length) return;
+
     let nextPage = currentPage + 1;
 
     if (nextPage === pageLength) return;
@@ -26,6 +28,8 @@ function usePagination(currentPage, onPageChange, pageSize, list) {
   }
 
   function prevPage() {
+    if (!list.length) return;
+
     let prevPage = currentPage - 1;
 
     if (prevPage === 0) return;
