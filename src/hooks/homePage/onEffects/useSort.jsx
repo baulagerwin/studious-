@@ -1,7 +1,4 @@
-import { useState } from "react";
-
-function useSort(initialSort, list) {
-  const [sort, setSort] = useState(initialSort);
+function useSort(sortBy, list) {
   let sorters = [
     {
       _id: 1,
@@ -47,11 +44,11 @@ function useSort(initialSort, list) {
   const sorted = sortQnas(list);
 
   function sortQnas(qnas) {
-    const sortBy = sorters.find((sorter) => sorter.name === sort);
-    return qnas.sort(sortBy.fn);
+    const sorter = sorters.find((sorter) => sorter.name === sortBy);
+    return qnas.sort(sorter.fn);
   }
 
-  return [sort, setSort, sorters, sorted];
+  return [sorters, sorted];
 }
 
 export default useSort;

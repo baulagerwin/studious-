@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react";
 
-function usePaginationOpen(paginatedList) {
+function usePaginationOpen() {
   const [isPaginationOpen, setIsPaginationOpen] = useState(false);
 
   function handlePaginationOpen(e, value) {
     e.stopPropagation();
-    if (!paginatedList.length) return;
 
     setIsPaginationOpen(value);
   }
 
   useEffect(() => {
-    document.body.addEventListener("mousedown", closeDropDown);
+    document.body.addEventListener("mousedown", close);
 
-    return () => document.body.removeEventListener("mousedown", closeDropDown);
+    return () => document.body.removeEventListener("mousedown", close);
   }, []);
 
-  function closeDropDown(e) {
+  function close(e) {
     e.stopPropagation();
 
     if (e.target.id === "paginationButton") return;

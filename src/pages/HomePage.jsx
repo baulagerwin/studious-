@@ -5,82 +5,67 @@ import QuestionsAndAnswers from "../components/QuestionsAndAnswers";
 import mockSubjects from "./subjects";
 import mockQnas from "./qnas";
 import FlexColGap4 from "../layouts/FlexColGap4";
-import useSort from "../hooks/useSort";
-import useFilterOpen from "../hooks/useFilterOpen";
-import useSortOpen from "../hooks/useSortOpen";
-import usePagination from "../hooks/usePagination";
-import usePaginationOpen from "../hooks/usePaginationOpen";
-import useFilter from "../hooks/useFilter";
-import useCurrentPage from "../hooks/useCurrentPage";
-import useInitSubjects from "../hooks/useInitSubjects";
-import useSearch from "../hooks/useSearch";
-import useSearchBy from "../hooks/useSearchBy";
-import useFilterBy from "../hooks/useFilterBy";
+import useInitSubjects from "../hooks/homePage/useInitSubjects";
+import useSettings from "../hooks/homePage/useSettings";
 
 function HomePage() {
-  let initialFilter = "All Subjects";
-  let pageSize = 5;
-
   let qnas = mockQnas;
   let subjects = useInitSubjects(mockSubjects, qnas);
 
-  const [currentPage, onPageChange, onInitialPage] = useCurrentPage(1);
-  const [searchBy, onChange, onEmptySearchBy, setTheFilterBy] = useSearchBy(
-    "",
-    initialFilter
-  );
-  const [filterBy, onFilterBy] = useFilterBy(
-    initialFilter,
-    onInitialPage,
-    onEmptySearchBy,
-    setTheFilterBy
-  );
+  let initialFilterBy = "All Subjects";
+  let initialSortBy = "A - Z";
+  let initialSearchBy;
+  let initialPage = 1;
+  let pageSize = 5;
 
-  const filtered = useFilter(initialFilter, filterBy, qnas);
-  const results = useSearch(searchBy, filtered);
-  const [sortBy, onSort, sorters, sorted] = useSort("A - Z", results);
-  const [pages, paginatedList, nextPage, prevPage] = usePagination(
-    currentPage,
-    onPageChange,
+  const [onOpen, onChanges, onEffects] = useSettings(
+    initialFilterBy,
+    initialSortBy,
+    initialSearchBy,
+    initialPage,
     pageSize,
-    sorted
+    qnas
   );
 
-  const [isFilterOpen, onFilterOpen] = useFilterOpen();
-  const [isSortOpen, onSortOpen] = useSortOpen();
-  const [isPaginationOpen, onPaginationOpen] = usePaginationOpen(paginatedList);
+  const validateCurrentPage = !onEffects.paginatedList.length
+    ? 0
+    : onChanges.currentPage;
+
+  const validateOnPaginationOpen = !onEffects.paginatedList.length
+    ? null
+    : onOpen.onPaginationOpen;
 
   return (
     <Container>
       <TwoThirdsContainer>
         <FlexColGap4>
           <Paraphernalia
-            isFilterOpen={isFilterOpen}
-            onFilterOpen={onFilterOpen}
-            filterBy={filterBy}
-            onFilterBy={onFilterBy}
+            isFilterOpen={onOpen.isFilterOpen}
+            onFilterOpen={onOpen.onFilterOpen}
+            filterBy={onChanges.filterBy}
+            onFilterBy={onChanges.onFilterBy}
             subjects={subjects}
-            isSortOpen={isSortOpen}
-            onSortOpen={onSortOpen}
-            sortBy={sortBy}
-            onSort={onSort}
-            options={sorters}
-            searchBy={searchBy}
-            onChange={onChange}
+            isSortOpen={onOpen.isSortOpen}
+            onSortOpen={onOpen.onSortOpen}
+            sortBy={onChanges.sortBy}
+            onSort={onChanges.onSortBy}
+            options={onEffects.sorters}
+            searchBy={onChanges.searchBy}
+            onChange={onChanges.onChange}
           />
           <hr className="mb-10" />
           <QuestionsAndAnswers
-            qnas={results}
-            onFilterOpen={onFilterOpen}
-            onSortOpen={onSortOpen}
-            isPaginationOpen={isPaginationOpen}
-            onPaginationOpen={onPaginationOpen}
-            currentPage={!paginatedList.length ? 0 : currentPage}
-            pages={pages}
-            paginatedQnas={paginatedList}
-            onPageChange={onPageChange}
-            prevPage={prevPage}
-            nextPage={nextPage}
+            qnas={onEffects.results}
+            onFilterOpen={onOpen.onFilterOpen}
+            onSortOpen={onOpen.onSortOpen}
+            isPaginationOpen={onOpen.isPaginationOpen}
+            onPaginationOpen={validateOnPaginationOpen}
+            currentPage={validateCurrentPage}
+            pages={onEffects.pages}
+            paginatedQnas={onEffects.paginatedList}
+            onPageChange={onChanges.onPageChange}
+            prevPage={onEffects.prevPage}
+            nextPage={onEffects.nextPage}
           />
         </FlexColGap4>
       </TwoThirdsContainer>

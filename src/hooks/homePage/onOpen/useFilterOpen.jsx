@@ -9,12 +9,12 @@ function useFilterOpen() {
   }
 
   useEffect(() => {
-    document.body.addEventListener("mousedown", closeDropDown);
+    document.body.addEventListener("mousedown", close);
 
-    return () => document.body.removeEventListener("mousedown", closeDropDown);
+    return () => document.body.removeEventListener("mousedown", close);
   }, []);
 
-  function closeDropDown(e) {
+  function close(e) {
     e.stopPropagation();
 
     if (e.target.id === "filterButton") return;
