@@ -6,7 +6,6 @@ import subjectService from "../services/subjectService";
 import HalfContainer from "../containers/HalfContainer";
 import Container from "../containers/Container";
 import RegisterForm from "../components/forms/RegisterForm";
-import RegisterFormText from "../components/forms/RegisterFormText";
 import config from "../../config.json";
 
 function RegisterPage() {
@@ -144,7 +143,6 @@ function RegisterPage() {
   return (
     <Container>
       <HalfContainer>
-        <RegisterFormText />
         <RegisterForm
           fields={fields}
           onChange={handleOnChange}

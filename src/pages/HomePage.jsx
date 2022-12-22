@@ -1,5 +1,5 @@
 import Container from "../containers/Container";
-import Paraphernalia from "../components/Paraphernalia";
+import Settings from "../components/Settings";
 import TwoThirdsContainer from "../containers/TwoThirdsContainer";
 import QuestionsAndAnswers from "../components/QuestionsAndAnswers";
 import mockSubjects from "./subjects";
@@ -7,6 +7,11 @@ import mockQnas from "./qnas";
 import FlexColGap4 from "../layouts/FlexColGap4";
 import useInitSubjects from "../hooks/homePage/useInitSubjects";
 import useSettings from "../hooks/homePage/useSettings";
+import NewSubjectForm from "../components/forms/NewSubjectForm";
+import PopupBackground from "../components/popup/PopupBackground";
+import PopupContent from "../components/popup/PopupContent";
+import OneThirdsContainer from "../containers/OneThirdsContainer";
+import NewQNAForm from "../components/forms/NewQNAForm";
 
 function HomePage() {
   let qnas = mockQnas;
@@ -36,40 +41,54 @@ function HomePage() {
     : onOpen.onPaginationOpen;
 
   return (
-    <Container>
-      <TwoThirdsContainer>
-        <FlexColGap4>
-          <Paraphernalia
-            isFilterOpen={onOpen.isFilterOpen}
-            onFilterOpen={onOpen.onFilterOpen}
-            filterBy={onChanges.filterBy}
-            onFilterBy={onChanges.onFilterBy}
-            subjects={subjects}
-            isSortOpen={onOpen.isSortOpen}
-            onSortOpen={onOpen.onSortOpen}
-            sortBy={onChanges.sortBy}
-            onSort={onChanges.onSortBy}
-            options={onEffects.sorters}
-            searchBy={onChanges.searchBy}
-            onChange={onChanges.onChange}
-          />
-          <hr className="mb-10" />
-          <QuestionsAndAnswers
-            qnas={onEffects.results}
-            onFilterOpen={onOpen.onFilterOpen}
-            onSortOpen={onOpen.onSortOpen}
-            isPaginationOpen={onOpen.isPaginationOpen}
-            onPaginationOpen={validateOnPaginationOpen}
-            currentPage={validateCurrentPage}
-            pages={onEffects.pages}
-            paginatedQnas={onEffects.paginatedList}
-            onPageChange={onChanges.onPageChange}
-            prevPage={onEffects.prevPage}
-            nextPage={onEffects.nextPage}
-          />
-        </FlexColGap4>
-      </TwoThirdsContainer>
-    </Container>
+    <>
+      <PopupBackground isPopUpOpen={onOpen.isPopUpOpen} />
+      <PopupContent
+        isPopUpOpen={onOpen.isPopUpOpen}
+        onPopUpOpen={onOpen.onPopUpOpen}
+      >
+        <OneThirdsContainer>
+          {/* <NewSubjectForm onPopUpOpen={onOpen.onPopUpOpen} /> */}
+          <NewQNAForm onPopUpOpen={onOpen.onPopUpOpen} />
+        </OneThirdsContainer>
+      </PopupContent>
+      <Container>
+        <TwoThirdsContainer>
+          <FlexColGap4>
+            <Settings
+              isFilterOpen={onOpen.isFilterOpen}
+              onFilterOpen={onOpen.onFilterOpen}
+              filterBy={onChanges.filterBy}
+              onFilterBy={onChanges.onFilterBy}
+              subjects={subjects}
+              isSortOpen={onOpen.isSortOpen}
+              onSortOpen={onOpen.onSortOpen}
+              sortBy={onChanges.sortBy}
+              onSort={onChanges.onSortBy}
+              options={onEffects.sorters}
+              searchBy={onChanges.searchBy}
+              onChange={onChanges.onChange}
+              isPopUpOpen={onOpen.isPopUpOpen}
+              onPopUpOpen={onOpen.onPopUpOpen}
+            />
+            <hr className="mb-10" />
+            <QuestionsAndAnswers
+              qnas={onEffects.results}
+              onFilterOpen={onOpen.onFilterOpen}
+              onSortOpen={onOpen.onSortOpen}
+              isPaginationOpen={onOpen.isPaginationOpen}
+              onPaginationOpen={validateOnPaginationOpen}
+              currentPage={validateCurrentPage}
+              pages={onEffects.pages}
+              paginatedQnas={onEffects.paginatedList}
+              onPageChange={onChanges.onPageChange}
+              prevPage={onEffects.prevPage}
+              nextPage={onEffects.nextPage}
+            />
+          </FlexColGap4>
+        </TwoThirdsContainer>
+      </Container>
+    </>
   );
 }
 

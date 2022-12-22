@@ -6,7 +6,7 @@ import TextBox from "./textboxes/TextBox";
 import FilterSubjects from "./dropDownMenus/FilterSubjects";
 import SortQnas from "./dropDownMenus/SortQnas";
 
-function Paraphernalia({
+function Settings({
   isFilterOpen,
   onFilterOpen,
   filterBy,
@@ -19,6 +19,8 @@ function Paraphernalia({
   options,
   searchBy,
   onChange,
+  isPopUpOpen,
+  onPopUpOpen,
 }) {
   return (
     <FiveGrids4x5>
@@ -34,6 +36,7 @@ function Paraphernalia({
       <Column>
         <AddButton
           text="New Subject"
+          onPopUpOpen={onPopUpOpen}
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -109,4 +112,4 @@ function Paraphernalia({
   );
 }
 
-export default Paraphernalia;
+export default Settings;

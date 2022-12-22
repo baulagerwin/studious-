@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <>
+    <div className="relative">
       <ToastContainer />
       <NavBar />
       <Routes>
@@ -21,7 +21,7 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

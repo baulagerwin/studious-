@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Container from "../containers/Container";
 import LoginForm from "../components/forms/LoginForm";
 import HalfContainer from "../containers/HalfContainer";
-import LoginFormText from "../components/forms/LoginFormText";
 
 function LoginPage() {
   const navigator = useNavigate();
@@ -30,14 +29,13 @@ function LoginPage() {
     });
   }
 
-  function isValid() {
-    return Boolean(fields.username.value) || Boolean(fields.password.value);
-  }
+  let isValid =
+    Boolean(fields.username.value) || Boolean(fields.password.value);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!isValid()) return;
+    if (!isValid) return;
 
     try {
       setIsValidating(true);
@@ -93,7 +91,6 @@ function LoginPage() {
   return (
     <Container>
       <HalfContainer>
-        <LoginFormText />
         <LoginForm
           fields={fields}
           onChange={handleOnChange}

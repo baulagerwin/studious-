@@ -15,3 +15,7 @@
 .animation-shake {
   animation: shake 400ms ease-in-out;
 }
+
+.opacity-full {
+  opacity: 1 !important;
+}
