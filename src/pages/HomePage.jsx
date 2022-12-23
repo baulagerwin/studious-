@@ -7,11 +7,8 @@ import mockQnas from "./qnas";
 import FlexColGap4 from "../layouts/FlexColGap4";
 import useInitSubjects from "../hooks/homePage/useInitSubjects";
 import useSettings from "../hooks/homePage/useSettings";
-import NewSubjectForm from "../components/forms/NewSubjectForm";
-import PopupBackground from "../components/popup/PopupBackground";
-import PopupContent from "../components/popup/PopupContent";
-import OneThirdsContainer from "../containers/OneThirdsContainer";
-import NewQNAForm from "../components/forms/NewQNAForm";
+import PopupNewSubject from "../components/popup/PopupNewSubject";
+import PopupNewQNA from "../components/popup/PopupNewQNA";
 
 function HomePage() {
   let qnas = mockQnas;
@@ -19,7 +16,7 @@ function HomePage() {
 
   let initialFilterBy = "All Subjects";
   let initialSortBy = "A - Z";
-  let initialSearchBy;
+  let initialSearchBy = "";
   let initialPage = 1;
   let pageSize = 5;
 
@@ -42,34 +39,34 @@ function HomePage() {
 
   return (
     <>
-      <PopupBackground isPopUpOpen={onOpen.isPopUpOpen} />
-      <PopupContent
-        isPopUpOpen={onOpen.isPopUpOpen}
-        onPopUpOpen={onOpen.onPopUpOpen}
-      >
-        <OneThirdsContainer>
-          {/* <NewSubjectForm onPopUpOpen={onOpen.onPopUpOpen} /> */}
-          <NewQNAForm onPopUpOpen={onOpen.onPopUpOpen} />
-        </OneThirdsContainer>
-      </PopupContent>
+      <PopupNewSubject
+        isPopUpOpen={onOpen.isNewSubjectOpen}
+        onPopUpOpen={onOpen.onNewSubjectOpen}
+      />
+      <PopupNewQNA
+        isPopUpOpen={onOpen.isNewQNAOpen}
+        onPopUpOpen={onOpen.onNewQNAOpen}
+      />
       <Container>
         <TwoThirdsContainer>
           <FlexColGap4>
             <Settings
+              initialFilterBy={initialFilterBy}
               isFilterOpen={onOpen.isFilterOpen}
               onFilterOpen={onOpen.onFilterOpen}
               filterBy={onChanges.filterBy}
               onFilterBy={onChanges.onFilterBy}
               subjects={subjects}
+              initialSortBy={initialSortBy}
               isSortOpen={onOpen.isSortOpen}
               onSortOpen={onOpen.onSortOpen}
               sortBy={onChanges.sortBy}
-              onSort={onChanges.onSortBy}
-              options={onEffects.sorters}
+              onSortBy={onChanges.onSortBy}
+              sorters={onEffects.sorters}
               searchBy={onChanges.searchBy}
               onChange={onChanges.onChange}
-              isPopUpOpen={onOpen.isPopUpOpen}
-              onPopUpOpen={onOpen.onPopUpOpen}
+              onNewSubjectOpen={onOpen.onNewSubjectOpen}
+              onNewQNAOpen={onOpen.onNewQNAOpen}
             />
             <hr className="mb-10" />
             <QuestionsAndAnswers

@@ -9,8 +9,16 @@ function Pagination({
   prevPage,
   nextPage,
 }) {
+  function handleMouseDown(e) {
+    e.stopPropagation();
+  }
+
+  function handleOnClick() {
+    onPaginationOpen(!isPaginationOpen);
+  }
+
   return (
-    <div className="flex relative">
+    <div className="flex relative" onMouseDown={handleMouseDown}>
       <ToolTip
         isPaginationOpen={isPaginationOpen}
         onPaginationOpen={onPaginationOpen}
@@ -20,24 +28,15 @@ function Pagination({
       />
       <button
         type="button"
-        id="paginationButton"
         className="flex items-center gap-1 border px-3 py-1 rounded-tl-md rounded-bl-md"
-        onClick={(e) => onPaginationOpen(e, !isPaginationOpen)}
+        onClick={handleOnClick}
       >
-        <div
-          id="paginationContainer"
-          className="text-md font-medium flex items-center gap-1"
-        >
-          <span id="paginationCurrentPage">{currentPage}</span>
-          <span id="paginationDash" className="text-slate-400 text-xs">
-            /
-          </span>
-          <span id="paginationPageLength" className="text-slate-400">
-            {pages.length}
-          </span>
+        <div className="text-md font-medium flex items-center gap-1">
+          <span>{currentPage}</span>
+          <span className="text-slate-400 text-xs">/</span>
+          <span className="text-slate-400">{pages.length}</span>
         </div>
         <svg
-          id="paginationIcon"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

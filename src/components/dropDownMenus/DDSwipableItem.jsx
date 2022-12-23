@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-function FilterSubjectsItem({ filterBy, onFilterBy, onOpen, item }) {
+function DDSwipableItem({ xBy, onXBy, onXOpen, item }) {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [positionDiff, setPositionDiff] = useState(0);
@@ -35,8 +35,8 @@ function FilterSubjectsItem({ filterBy, onFilterBy, onOpen, item }) {
     setPositionDiff(0);
 
     if (startX !== e.nativeEvent.pageX) return;
-    onFilterBy(item.name);
-    onOpen(e, false);
+    onXBy(item.name);
+    onXOpen(false);
   }
 
   function handleOnMouseLeave(e) {
@@ -69,7 +69,7 @@ function FilterSubjectsItem({ filterBy, onFilterBy, onOpen, item }) {
       </aside>
       <div
         className={`shrink-0 w-full flex items-center gap-1 px-4 py-3 hover:bg-secondTint select-none ${
-          filterBy === item.name ? "bg-secondTint" : ""
+          xBy === item.name ? "bg-secondTint" : ""
         }`}
         onMouseDown={handleOnMouseDown}
         onMouseMove={item.swipeable ? handleOnMouseMove : null}
@@ -102,4 +102,4 @@ function FilterSubjectsItem({ filterBy, onFilterBy, onOpen, item }) {
   );
 }
 
-export default FilterSubjectsItem;
+export default DDSwipableItem;

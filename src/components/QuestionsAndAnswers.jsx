@@ -1,5 +1,5 @@
 import Accordion from "../components/accordion/Accordion";
-import Pagination from "./Pagination";
+import Pagination from "./pagination/Pagination";
 
 function QuestionsAndAnswers({
   qnas,
@@ -32,7 +32,6 @@ function QuestionsAndAnswers({
           nextPage={nextPage}
         />
       </div>
-
       <Accordion
         qnas={paginatedQnas}
         onFilterOpen={onFilterOpen}

@@ -22,8 +22,8 @@ class TextBox extends Component {
   getInputStyle = () => {
     const { isFocus } = this.state;
 
-    if (isFocus) return "text-xl p-1 outline-none bg-white w-full";
-    return "text-xl p-1 outline-none bg-gray-100 w-full";
+    if (isFocus) return "text-xl p-1 pr-9 outline-none bg-white w-full";
+    return "text-xl p-1 pr-9 outline-none bg-gray-100 w-full";
   };
 
   getPlaceHolderStyle = () => {

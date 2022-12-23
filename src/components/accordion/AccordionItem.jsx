@@ -21,9 +21,9 @@ function AccordionItem({ qna, onFilterOpen, onSortOpen, onPaginationOpen }) {
     e.stopPropagation();
 
     // Components that needs to be closed
-    onFilterOpen(e, false);
-    onSortOpen(e, false);
-    onPaginationOpen(e, false);
+    onFilterOpen(false);
+    onSortOpen(false);
+    onPaginationOpen(false);
 
     setIsDown(true);
     setStartX(e.nativeEvent.offsetX);

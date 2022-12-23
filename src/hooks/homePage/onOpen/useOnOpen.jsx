@@ -1,13 +1,15 @@
 import useFilterOpen from "./useFilterOpen";
 import usePaginationOpen from "./usePaginationOpen";
-import usePopUpOpen from "./usePopUpOpen";
 import useSortOpen from "./useSortOpen";
+import useNewSubjectOpen from "./useNewSubjectOpen";
+import useNewQNAOpen from "./useNewQNAOpen";
 
 function useOnOpen() {
   const [isFilterOpen, onFilterOpen] = useFilterOpen();
   const [isSortOpen, onSortOpen] = useSortOpen();
   const [isPaginationOpen, onPaginationOpen] = usePaginationOpen();
-  const [isPopUpOpen, onPopUpOpen] = usePopUpOpen();
+  const [isNewSubjectOpen, onNewSubjectOpen] = useNewSubjectOpen();
+  const [isNewQNAOpen, onNewQNAOpen] = useNewQNAOpen();
 
   return {
     isFilterOpen,
@@ -16,8 +18,10 @@ function useOnOpen() {
     onSortOpen,
     isPaginationOpen,
     onPaginationOpen,
-    isPopUpOpen,
-    onPopUpOpen,
+    isNewSubjectOpen,
+    onNewSubjectOpen,
+    isNewQNAOpen,
+    onNewQNAOpen,
   };
 }
 

@@ -3,40 +3,44 @@ import Column from "../containers/Column";
 import AddButton from "../elements/AddButton";
 import ColumnSpanFull from "../containers/ColumnSpanFull";
 import TextBox from "./textboxes/TextBox";
-import FilterSubjects from "./dropDownMenus/FilterSubjects";
-import SortQnas from "./dropDownMenus/SortQnas";
+import DropDownMenu from "./dropDownMenus/DropDownMenu";
 
 function Settings({
+  initialFilterBy,
   isFilterOpen,
   onFilterOpen,
   filterBy,
   onFilterBy,
   subjects,
+  initialSortBy,
   isSortOpen,
   onSortOpen,
   sortBy,
-  onSort,
-  options,
+  onSortBy,
+  sorters,
   searchBy,
   onChange,
-  isPopUpOpen,
-  onPopUpOpen,
+  onNewSubjectOpen,
+  onNewQNAOpen,
 }) {
   return (
     <FiveGrids4x5>
       <Column>
-        <FilterSubjects
-          isFilterOpen={isFilterOpen}
-          onFilterOpen={onFilterOpen}
-          filterBy={filterBy}
-          onFilterBy={onFilterBy}
-          subjects={subjects}
+        <DropDownMenu
+          initialXBy={initialFilterBy}
+          isXOpen={isFilterOpen}
+          onXOpen={onFilterOpen}
+          xBy={filterBy}
+          onXBy={onFilterBy}
+          limitLength={6}
+          items={subjects}
+          swipeable={true}
         />
       </Column>
       <Column>
         <AddButton
           text="New Subject"
-          onPopUpOpen={onPopUpOpen}
+          onPopUpOpen={onNewSubjectOpen}
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,17 +60,21 @@ function Settings({
       </Column>
       <Column />
       <Column>
-        <SortQnas
-          isSortOpen={isSortOpen}
-          onSortOpen={onSortOpen}
-          sortBy={sortBy}
-          onSort={onSort}
-          options={options}
+        <DropDownMenu
+          initialXBy={initialSortBy}
+          isXOpen={isSortOpen}
+          onXOpen={onSortOpen}
+          xBy={sortBy}
+          onXBy={onSortBy}
+          limitLength={6}
+          items={sorters}
+          swipeable={false}
         />
       </Column>
       <Column>
         <AddButton
           text="New Q & A"
+          onPopUpOpen={onNewQNAOpen}
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -97,12 +105,12 @@ function Settings({
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6"
+              className="w-5 h-5"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
               />
             </svg>
           }

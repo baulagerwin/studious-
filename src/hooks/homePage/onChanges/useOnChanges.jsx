@@ -24,7 +24,7 @@ function useOnChanges(
     setTheFilterBy
   );
 
-  const [sortBy, onSortBy] = useSortBy(initialSortBy);
+  const [sortBy, onSortBy] = useSortBy(initialSortBy, onInitialPage);
 
   return {
     initialFilterBy,

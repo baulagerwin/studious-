@@ -5,20 +5,13 @@ function ToolTip({
   onPageChange,
   pages,
 }) {
-  function handleOnMouseDown(e) {
-    e.stopPropagation();
-  }
-
-  function handleOnMouseUp(e, page) {
-    e.stopPropagation();
-
+  function handleOnClick(page) {
     onPageChange(page);
-    onPaginationOpen(e, false);
+    onPaginationOpen(false);
   }
 
   return (
     <div
-      id="paginationToolTip"
       className={`${
         isPaginationOpen ? "visible" : "invisible"
       } absolute cursor-auto overflow-auto top-0 -left-5 translate-y-9 -translate-x-24 bg-white border  shadow-xl h-56 w-48 rounded-tl-md rounded-bl-md`}
@@ -32,8 +25,8 @@ function ToolTip({
                 ? "bg-slate-200 rounded-md"
                 : "text-slate-400"
             } `}
-            onMouseDown={handleOnMouseDown}
-            onMouseUp={(e) => handleOnMouseUp(e, page)}
+            // onMouseUp={(e) => handleOnMouseUp(page)}
+            onClick={() => handleOnClick(page)}
           >
             {page}
           </li>

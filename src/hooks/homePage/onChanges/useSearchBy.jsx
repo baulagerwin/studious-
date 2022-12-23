@@ -9,7 +9,7 @@ function useSearchBy(initialSearchBy, initialFilterBy) {
   }
 
   function handleEmpty() {
-    setSearchBy("");
+    setSearchBy(initialSearchBy);
   }
 
   function handleOnChange(e) {

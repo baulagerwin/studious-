@@ -1,9 +1,14 @@
 import { useState } from "react";
 
-function useSortBy(initialSortBy) {
+function useSortBy(initialSortBy, onInitialPage) {
   const [sortBy, setSortBy] = useState(initialSortBy);
 
-  return [sortBy, setSortBy];
+  function handleSortBy(value) {
+    onInitialPage();
+    setSortBy(value);
+  }
+
+  return [sortBy, handleSortBy];
 }
 
 export default useSortBy;

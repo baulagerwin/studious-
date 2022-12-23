@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 function useSortOpen() {
   const [isSortOpen, setIsSortOpen] = useState(false);
 
-  function handleSortOpen(e, value) {
-    e.stopPropagation();
+  function handleSortOpen(value) {
     setIsSortOpen(value);
   }
 
@@ -14,14 +13,7 @@ function useSortOpen() {
     return () => document.body.removeEventListener("mousedown", close);
   }, []);
 
-  function close(e) {
-    e.stopPropagation();
-
-    if (e.target.id === "sortButton") return;
-    if (e.target.id === "sortText") return;
-    if (e.target.id === "sortIcon") return;
-    if (e.target.id === "sortList") return;
-
+  function close() {
     setIsSortOpen(false);
   }
 

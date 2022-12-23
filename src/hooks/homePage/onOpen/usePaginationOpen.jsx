@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 function usePaginationOpen() {
   const [isPaginationOpen, setIsPaginationOpen] = useState(false);
 
-  function handlePaginationOpen(e, value) {
-    e.stopPropagation();
-
+  function handlePaginationOpen(value) {
     setIsPaginationOpen(value);
   }
 
@@ -15,17 +13,7 @@ function usePaginationOpen() {
     return () => document.body.removeEventListener("mousedown", close);
   }, []);
 
-  function close(e) {
-    e.stopPropagation();
-
-    if (e.target.id === "paginationButton") return;
-    if (e.target.id === "paginationContainer") return;
-    if (e.target.id === "paginationCurrentPage") return;
-    if (e.target.id === "paginationDash") return;
-    if (e.target.id === "paginationPageLength") return;
-    if (e.target.id === "paginationIcon") return;
-    if (e.target.id === "paginationToolTip") return;
-
+  function close() {
     setIsPaginationOpen(false);
   }
 
