@@ -27,6 +27,7 @@ function useSettings(
     pageSize,
     onChanges.currentPage,
     onChanges.onPageChange,
+    onOpen.onPaginationOpen,
     qnas
   );
 

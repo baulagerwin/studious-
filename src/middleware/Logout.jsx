@@ -18,8 +18,6 @@ function Logout() {
     dispatch(subjectsReset());
     navigator("/");
   }, []);
-
-  return null;
 }
 
 export default Logout;

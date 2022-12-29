@@ -1,4 +1,10 @@
-function usePagination(currentPage, onPageChange, pageSize, list) {
+function usePagination(
+  currentPage,
+  onPageChange,
+  onPaginationOpen,
+  pageSize,
+  list
+) {
   const pages = getPages(pageSize, list);
   const paginatedList = paginate(pageSize, currentPage, list);
   const pageLength = pages.length + 1;
@@ -25,6 +31,7 @@ function usePagination(currentPage, onPageChange, pageSize, list) {
 
     if (nextPage === pageLength) return;
     onPageChange(nextPage);
+    onPaginationOpen(false);
   }
 
   function prevPage() {
@@ -34,6 +41,7 @@ function usePagination(currentPage, onPageChange, pageSize, list) {
 
     if (prevPage === 0) return;
     onPageChange(prevPage);
+    onPaginationOpen(false);
   }
 
   return [pages, paginatedList, nextPage, prevPage];

@@ -1,15 +1,11 @@
-import useFilterOpen from "./useFilterOpen";
-import usePaginationOpen from "./usePaginationOpen";
-import useSortOpen from "./useSortOpen";
-import useNewSubjectOpen from "./useNewSubjectOpen";
-import useNewQNAOpen from "./useNewQNAOpen";
+import useOpen from "./useOpen";
 
 function useOnOpen() {
-  const [isFilterOpen, onFilterOpen] = useFilterOpen();
-  const [isSortOpen, onSortOpen] = useSortOpen();
-  const [isPaginationOpen, onPaginationOpen] = usePaginationOpen();
-  const [isNewSubjectOpen, onNewSubjectOpen] = useNewSubjectOpen();
-  const [isNewQNAOpen, onNewQNAOpen] = useNewQNAOpen();
+  const [isFilterOpen, onFilterOpen] = useOpen();
+  const [isSortOpen, onSortOpen] = useOpen();
+  const [isPaginationOpen, onPaginationOpen] = useOpen();
+  const [isNewSubjectOpen, onNewSubjectOpen] = useOpen();
+  const [isNewQNAOpen, onNewQNAOpen] = useOpen();
 
   return {
     isFilterOpen,

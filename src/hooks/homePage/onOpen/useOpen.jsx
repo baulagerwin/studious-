@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
-function useSortOpen() {
-  const [isSortOpen, setIsSortOpen] = useState(false);
+function onOpen() {
+  const [isOpen, setIsOpen] = useState(false);
 
-  function handleSortOpen(value) {
-    setIsSortOpen(value);
+  function onOpen(value) {
+    setIsOpen(value);
   }
 
   useEffect(() => {
@@ -14,10 +14,10 @@ function useSortOpen() {
   }, []);
 
   function close() {
-    setIsSortOpen(false);
+    setIsOpen(false);
   }
 
-  return [isSortOpen, handleSortOpen];
+  return [isOpen, onOpen];
 }
 
-export default useSortOpen;
+export default onOpen;

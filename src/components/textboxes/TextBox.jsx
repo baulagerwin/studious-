@@ -22,8 +22,8 @@ class TextBox extends Component {
   getInputStyle = () => {
     const { isFocus } = this.state;
 
-    if (isFocus) return "text-xl p-1 pr-9 outline-none bg-white w-full";
-    return "text-xl p-1 pr-9 outline-none bg-gray-100 w-full";
+    if (isFocus) return "p-1 pr-9 outline-none bg-white w-full";
+    return "p-1 pr-9 outline-none bg-gray-100 w-full";
   };
 
   getPlaceHolderStyle = () => {
@@ -31,19 +31,19 @@ class TextBox extends Component {
     const { error } = this.props;
 
     if (isFocus && error)
-      return "text-md text-red-600 font-semibold bg-white  p-1 absolute top-50 -translate-y-7 left-0 translate-x-2 pointer-events-none transition-all duration-250";
+      return "text-md text-red-600 font-semibold bg-white px-1 absolute top-50 -translate-y-6 left-0 translate-x-2 pointer-events-none transition-all duration-250";
     if (isFocus)
-      return "text-md text-second font-semibold bg-white p-1 absolute top-50 -translate-y-7 left-0 translate-x-2 pointer-events-none transition-all duration-250";
-    return "text-xl absolute top-50 translate-y-1 left-0 translate-x-5 pointer-events-none transition-all duration-250";
+      return "text-md text-second font-semibold bg-white px-1 absolute top-50 -translate-y-6 left-0 translate-x-2 pointer-events-none transition-all duration-250";
+    return "text-md absolute top-50 translate-y-1 left-0 translate-x-4 pointer-events-none transition-all duration-250";
   };
 
   getLabelStyle = () => {
     const { error } = this.props;
 
     if (error)
-      return "absolute top-50 left-100 translate-y-2 -translate-x-7 text-red-600";
+      return "absolute top-1/2 right-0 -translate-y-1/2 -translate-x-3 text-red-600";
 
-    return "absolute top-50 left-100 translate-y-2 -translate-x-7";
+    return "absolute top-1/2 right-0 -translate-y-1/2 -translate-x-3";
   };
 
   handleOnFocus = () => {

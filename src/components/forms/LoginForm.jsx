@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function LoginForm({ fields, onChange, isValidating, onSubmit }) {
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="mt-36">
       <TwoGrids4x8>
         <ColumnSpanFull>
           <p className="text-xl font-semibold uppercase text-gray-400 mb-2">

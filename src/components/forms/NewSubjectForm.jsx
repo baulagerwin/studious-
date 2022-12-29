@@ -2,22 +2,18 @@ import Center from "../../containers/Center";
 import SubmitButton from "../../elements/SubmitButton";
 import TextBox from "../textboxes/TextBox";
 
-function NewSubjectForm({ onPopUpOpen }) {
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    onPopUpOpen(false);
-  }
-
-  function handleOnClick(e) {
-    e.stopPropagation();
-  }
-
+function NewSubjectForm({
+  onPopUpOpen,
+  name,
+  onChange,
+  isValidating,
+  onSubmit,
+}) {
   return (
     <form
-      className="bg-white rounded-md py-6 px-8 -translate-y-1/4 shadow-xl"
-      onSubmit={handleSubmit}
-      onClick={handleOnClick}
+      className="bg-white rounded-md py-6 px-8 -translate-y-0 shadow-xl"
+      onSubmit={onSubmit}
+      onMouseDown={(e) => e.stopPropagation()}
     >
       <div className="flex flex-col gap-6 mb-4">
         <div className="flex flex-col gap-4">
@@ -45,6 +41,8 @@ function NewSubjectForm({ onPopUpOpen }) {
           id="subjectName"
           name="subjectName"
           text="Name"
+          value={name}
+          onChange={onChange}
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +62,7 @@ function NewSubjectForm({ onPopUpOpen }) {
         />
       </div>
       <Center>
-        <SubmitButton isValidating={false}>Submit</SubmitButton>
+        <SubmitButton isValidating={isValidating}>Submit</SubmitButton>
       </Center>
     </form>
   );

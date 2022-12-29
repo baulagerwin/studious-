@@ -25,6 +25,7 @@ class Email extends TextBox {
   getErrorMessage = (value, error) => {
     return value && error ? error.details[0].message.replace(/["]/gi, "") : "";
   };
+
   validate = (value) => {
     const schema = Joi.object({
       email: Joi.string()

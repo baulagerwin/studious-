@@ -7,7 +7,7 @@ function PopupNewQNA({ isPopUpOpen, onPopUpOpen }) {
   return (
     <>
       <PopupBackground isPopUpOpen={isPopUpOpen} />
-      <PopupContent isPopUpOpen={isPopUpOpen} onPopUpOpen={onPopUpOpen}>
+      <PopupContent isPopUpOpen={isPopUpOpen}>
         <OneThirdsContainer>
           <NewQNAForm onPopUpOpen={onPopUpOpen} />
         </OneThirdsContainer>

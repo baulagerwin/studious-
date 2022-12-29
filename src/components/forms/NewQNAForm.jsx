@@ -1,24 +1,32 @@
+import { useState } from "react";
 import Center from "../../containers/Center";
 import SubmitButton from "../../elements/SubmitButton";
+import DropDownMenu from "../dropDownMenus/DropDownMenu";
 import TextBox from "../textboxes/TextBox";
+import TextPack from "../textboxes/TextPack";
+import mockSubjects from "../../pages/subjects";
+import useOpen from "../../hooks/homePage/onOpen/useOpen";
 
 function NewQNAForm({ onPopUpOpen }) {
+  let initialSubject = mockSubjects[0].name;
+  const [subject, setIsSubject] = useState(initialSubject);
+  const [isOpen, onOpen] = useOpen();
+
   function handleSubmit(e) {
     e.preventDefault();
     onPopUpOpen(false);
-  }
-
-  function handleOnClick(e) {
-    e.stopPropagation();
   }
 
   return (
     <form
       className="bg-white rounded-md py-6 px-8 -translate-y-0 shadow-xl"
       onSubmit={handleSubmit}
-      onClick={handleOnClick}
+      onMouseDown={(e) => {
+        onOpen(false);
+        e.stopPropagation();
+      }}
     >
-      <div className="flex flex-col gap-6 mb-4">
+      <div className="flex flex-col gap-4 mb-4">
         <div className="flex flex-col gap-4">
           <div className="flex justify-between items-end">
             <h1 className="text-xl font-semibold">
@@ -43,7 +51,16 @@ function NewQNAForm({ onPopUpOpen }) {
           <hr />
         </div>
 
-        {/* Dropdown menu here */}
+        <DropDownMenu
+          initialXBy={initialSubject}
+          isXOpen={isOpen}
+          onXOpen={onOpen}
+          xBy={subject}
+          onXBy={setIsSubject}
+          limitLength={4}
+          items={mockSubjects}
+          swipeable={false}
+        />
 
         <TextBox
           id="question"
@@ -66,27 +83,7 @@ function NewQNAForm({ onPopUpOpen }) {
             </svg>
           }
         />
-        <TextBox
-          id="answer"
-          name="answer"
-          text="Answer"
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          }
-        />
+        <TextPack id="answer" name="answer" text="Answer" />
       </div>
       <Center>
         <SubmitButton isValidating={false}>Submit</SubmitButton>

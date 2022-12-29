@@ -2,8 +2,10 @@ function DDButton({ initialXBy, isXOpen, onXOpen, xBy }) {
   return (
     <button
       type="button"
-      className={`px-4 py-2 flex items-center justify-between border rounded-md h-full w-full ${
-        isXOpen ? "border-second" : ""
+      className={`px-4 py-3 flex items-center justify-between rounded-md h-full w-full ${
+        isXOpen
+          ? "border-2 border-second bg-white outline outline-2 outline-gray-200"
+          : "border-2 border-transparent bg-gray-100 outline outline-2 outline-transparent"
       } cursor-pointer select-none`}
       onClick={() => onXOpen(!isXOpen)}
     >

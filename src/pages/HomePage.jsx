@@ -9,6 +9,7 @@ import useInitSubjects from "../hooks/homePage/useInitSubjects";
 import useSettings from "../hooks/homePage/useSettings";
 import PopupNewSubject from "../components/popup/PopupNewSubject";
 import PopupNewQNA from "../components/popup/PopupNewQNA";
+import useHomeFields from "../hooks/homePage/useHomeFields";
 
 function HomePage() {
   let qnas = mockQnas;
@@ -29,23 +30,23 @@ function HomePage() {
     qnas
   );
 
-  const validateCurrentPage = !onEffects.paginatedList.length
-    ? 0
-    : onChanges.currentPage;
-
-  const validateOnPaginationOpen = !onEffects.paginatedList.length
-    ? null
-    : onOpen.onPaginationOpen;
+  const [newSubjectFields] = useHomeFields(onOpen);
 
   return (
     <>
       <PopupNewSubject
         isPopUpOpen={onOpen.isNewSubjectOpen}
         onPopUpOpen={onOpen.onNewSubjectOpen}
+        name={newSubjectFields.name}
+        onChange={newSubjectFields.handleOnChange}
+        isValidating={newSubjectFields.isValidating}
+        onSubmit={newSubjectFields.handleSubmit}
       />
       <PopupNewQNA
         isPopUpOpen={onOpen.isNewQNAOpen}
         onPopUpOpen={onOpen.onNewQNAOpen}
+        isSubjectsOpen={onOpen.isSubjectsOpen}
+        onSubjectsOpen={onOpen.onSubjectsOpen}
       />
       <Container>
         <TwoThirdsContainer>
@@ -74,8 +75,12 @@ function HomePage() {
               onFilterOpen={onOpen.onFilterOpen}
               onSortOpen={onOpen.onSortOpen}
               isPaginationOpen={onOpen.isPaginationOpen}
-              onPaginationOpen={validateOnPaginationOpen}
-              currentPage={validateCurrentPage}
+              onPaginationOpen={
+                !onEffects.paginatedList.length ? null : onOpen.onPaginationOpen
+              }
+              currentPage={
+                !onEffects.paginatedList.length ? 0 : onChanges.currentPage
+              }
               pages={onEffects.pages}
               paginatedQnas={onEffects.paginatedList}
               onPageChange={onChanges.onPageChange}

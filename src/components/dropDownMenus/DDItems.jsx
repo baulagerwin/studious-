@@ -12,7 +12,7 @@ function DDItems({
 }) {
   return (
     <ul
-      className={`absolute left-0 top-full translate-y-1 w-full border rounded-md cursor-pointer bg-white z-10 shadow ${
+      className={`absolute left-0 top-full translate-y-2 w-full border rounded-md cursor-pointer bg-white z-10 shadow-xl ${
         items.length > limitLength ? "h-60 overflow-y-auto" : "h-auto"
       } ${isXOpen ? "visible" : "invisible"}`}
     >

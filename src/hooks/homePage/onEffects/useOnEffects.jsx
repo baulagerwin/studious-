@@ -11,6 +11,7 @@ function useOnEffects(
   pageSize,
   currentPage,
   onPageChange,
+  onPaginationOpen,
   qnas
 ) {
   const filtered = useFilter(initialFilterBy, filterBy, qnas);
@@ -19,6 +20,7 @@ function useOnEffects(
   const [pages, paginatedList, nextPage, prevPage] = usePagination(
     currentPage,
     onPageChange,
+    onPaginationOpen,
     pageSize,
     sorted
   );

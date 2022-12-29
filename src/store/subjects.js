@@ -26,6 +26,11 @@ const slice = createSlice({
       subjects.isLoading = false;
       subjects.lastFetch = null;
     },
+    subjectAdded: (subjects, action) => {
+      const { _id, name } = action.payload;
+      let subject = { _id, name };
+      subjects.list.push(subject);
+    },
   },
 });
 
@@ -34,6 +39,7 @@ export const {
   subjectsRequestFailed,
   subjectsReceived,
   subjectsReset,
+  subjectAdded,
 } = slice.actions;
 export default slice.reducer;
 
@@ -54,3 +60,11 @@ export const loadSubjects = () => (getState, dispatch) => {
     })
   );
 };
+
+export const addSubject = (payload) =>
+  apiRequest({
+    url,
+    method: "post",
+    data: payload,
+    onSuccess: subjectAdded.type,
+  });
